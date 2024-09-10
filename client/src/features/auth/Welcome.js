@@ -17,14 +17,14 @@ const Welcome = () => {
         <Link to="/dash/notes">View techNotes</Link>
       </p>
       <p>
-        <Link to="/dash/notes">Add new note</Link>
+        <Link to="/dash/notes/new">Add new note</Link>
       </p>
 
       <p>
         <Link to="/dash/users">View User Settings</Link>
       </p>
       <p>
-        <Link to="/dash/notes">Add new User</Link>
+        <Link to="/dash/users/new">Add new User</Link>
       </p>
     </section>
   );

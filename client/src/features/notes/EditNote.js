@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectNoteById } from "./notesApiSlice";
 import { selectAllUsers } from "../users/usersApiSlice";
-import EditNoteForm from "./EditNoteForm";
+import EditNoteForm from "./EditNote";
 
 const EditNote = () => {
   const { id } = useParams();
