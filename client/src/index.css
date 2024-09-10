@@ -52,10 +52,102 @@ body {
   white-space: nowrap;
 }
 
-.letters {
-  font-size: 2.5rem;
-  color: var(--TABLE-COLOR);
+/* Add animation to p elements */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
+
+.welcome p {
+  font-size: 1.25rem;
+  animation: slideIn 0.8s ease-out forwards;
+  color: var(--lapis-lazuli); /* Updated to a dark, visible color */
+  margin: 0.75em 0;
+  opacity: 0; /* Initially hidden for the slide effect */
+}
+
+.welcome p:nth-child(1) {
+  animation-delay: 0.2s;
+}
+.welcome p:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.welcome p:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.welcome p:nth-child(4) {
+  animation-delay: 0.8s;
+}
+.welcome p:nth-child(5) {
+  animation-delay: 1s;
+}
+
+/* Styling the link */
+.letters {
+  color: var(--polynesian-blue); /* Darker for visibility */
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.5rem;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease-in-out;
+}
+
+.letters::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: var(--orange-crayola); /* Earthy orange color */
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%);
+}
+
+.letters:hover::before {
+  transform: translateX(0%);
+}
+
+.letters:hover {
+  color: var(--orange-crayola); /* Changes to a warmer tone when hovered */
+  transform: translateX(10px);
+}
+
+/* Rainbow animated text */
+.rainbow-text {
+  font-size: 3rem;
+  background-image: linear-gradient(
+    45deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
+  background-clip: text;
+  color: transparent;
+  animation: rainbow 3s infinite;
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
 .icon-button {
   width: 48px;
   height: 48px;
@@ -86,6 +178,7 @@ body {
   background: linear-gradient(135deg, #606c38, #283618);
   color: var(--COLOR);
   background-image: url("./img/black.png");
+
   background-size: cover;
   background-position: top right;
   background-blend-mode: multiply;
@@ -413,6 +506,38 @@ tr {
     font-size: 1.5rem;
   }
 
+  .rainbow-text {
+    font-size: 5rem; /* Large font size */
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(
+      to right,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet
+    );
+    background-size: 400%;
+    -webkit-background-clip: text;
+    color: transparent; /* Hide the text color, show gradient */
+    animation: rainbow-animation 5s ease-in-out infinite;
+  }
+
+  /* Animation keyframes */
+  @keyframes rainbow-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
   .table--notes {
     grid-template-columns: repeat(3, 1fr) 2fr repeat(2, 1fr);
   }
@@ -425,5 +550,9 @@ tr {
 
   .form__action-buttons {
     position: static;
+  }
+
+  a {
+    color: black;
   }
 }

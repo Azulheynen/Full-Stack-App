@@ -11,19 +11,27 @@ const Welcome = () => {
     <section className="welcome">
       <p>{today}</p>
 
-      <h1>Welcome!</h1>
-      <p className="letters">
-        <Link to="/dash/notes">View techNotes</Link>
+      <h1 class="rainbow-text">Welcome!</h1>
+      <p>
+        <Link className="letters" to="/dash/notes">
+          View techNotes
+        </Link>
       </p>
       <p>
-        <Link to="/dash/notes/new">Add new note</Link>
+        <Link className="letters" to="/dash/notes/new">
+          Add new note
+        </Link>
       </p>
 
       <p>
-        <Link to="/dash/users">View User Settings</Link>
+        <Link className="letters" to="/dash/users">
+          View User Settings
+        </Link>
       </p>
       <p>
-        <Link to="/dash/users/new">Add new User</Link>
+        <Link className="letters" to="/dash/users/new">
+          Add new User
+        </Link>
       </p>
     </section>
   );
