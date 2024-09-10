@@ -28,7 +28,7 @@ const Public = () => {
         <p>Curated by: All</p>
       </main>
       <footer>
-        <Link to="/login">Enter the Design Studio</Link>
+        <Link to="/dash">Enter the Designer's Notes Studio</Link>
       </footer>
     </section>
   );

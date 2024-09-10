@@ -34,7 +34,7 @@ const NotesList = () => {
         <thead className="table__thead">
           <tr>
             <th scope="col" className="table__th note__status">
-              Status
+              Username
             </th>
             <th scope="col" className="table__th note__created">
               Created

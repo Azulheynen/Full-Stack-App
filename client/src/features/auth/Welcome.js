@@ -12,8 +12,7 @@ const Welcome = () => {
       <p>{today}</p>
 
       <h1>Welcome!</h1>
-
-      <p>
+      <p className="letters">
         <Link to="/dash/notes">View techNotes</Link>
       </p>
       <p>
