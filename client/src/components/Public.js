@@ -1,10 +1,12 @@
-import { Icon } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import SwitchAccessShortcutIcon from "@mui/icons-material/SwitchAccessShortcut";
 import StyleIcon from "@mui/icons-material/Style";
+import "../img/home.png";
 
 const Public = () => {
   const navigate = useNavigate();
+
+  // Click handler for image/icon
   const onGoHomeClicked = () => navigate("/dash");
 
   const content = (
@@ -30,21 +32,21 @@ const Public = () => {
             5678 Visionary Blvd
             <br />
             Buenos Aires, CF, 1280
-            <br />
-            {/* <a href="tel:+[000-800-999]">Connect with us!</a> */}
           </address>
-          <br />
-        </main>
-        <footer>
-          <SwitchAccessShortcutIcon
-            className="home-icon"
-            style={{ fontSize: "28px" }}
-            align="center"
-          ></SwitchAccessShortcutIcon>
-          <Link className="footer-label" href="/dash">
+
+          {/* Link to enter the Studio */}
+          <Link className="footer-label">
             Enter the Designer's Notes Studio
           </Link>
-        </footer>
+
+          <div className="animated-icon-container" onClick={onGoHomeClicked}>
+            <img
+              src={require("../img/home.png")}
+              alt="Enter the Designer's Notes"
+              className="animated-icon"
+            />
+          </div>
+        </main>
       </section>
     </div>
   );
