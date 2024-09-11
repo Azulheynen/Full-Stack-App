@@ -12,7 +12,7 @@ const NewNoteForm = ({ users }) => {
 
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [userId, setUserId] = useState(users[0].id);
+  const [userId, setUserId] = useState(users.id);
 
   useEffect(() => {
     if (isSuccess) {
@@ -20,6 +20,7 @@ const NewNoteForm = ({ users }) => {
       setText("");
       setUserId("");
       navigate("/dash/notes");
+      console.log(users[0].id);
     }
   }, [isSuccess, navigate]);
 
