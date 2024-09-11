@@ -1,10 +1,11 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Icon } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import SwitchAccessShortcutIcon from "@mui/icons-material/SwitchAccessShortcut";
+import StyleIcon from "@mui/icons-material/Style";
 
 const Public = () => {
-  useEffect(() => {
-    // You can perform any additional effects when the component mounts, if needed.
-  }, []);
+  const navigate = useNavigate();
+  const onGoHomeClicked = () => navigate("/dash");
 
   const content = (
     <div className="public-container">
@@ -30,13 +31,17 @@ const Public = () => {
             <br />
             Buenos Aires, CF, 1280
             <br />
-            <a href="tel:+[000-800-999]">Connect with us!</a>
+            {/* <a href="tel:+[000-800-999]">Connect with us!</a> */}
           </address>
           <br />
-          <p>Curated by: All</p>
         </main>
         <footer>
-          <Link className="welcome-link" to="/dash">
+          <SwitchAccessShortcutIcon
+            className="home-icon"
+            style={{ fontSize: "28px" }}
+            align="center"
+          ></SwitchAccessShortcutIcon>
+          <Link className="footer-label" href="/dash">
             Enter the Designer's Notes Studio
           </Link>
         </footer>

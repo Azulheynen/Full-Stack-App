@@ -69,12 +69,16 @@ body {
   z-index: 1;
   text-align: center;
   opacity: 0;
-  animation: fadeInContent 3s ease-in-out forwards 2s; /* Delay content fade by 2s */
+
+  animation: fadeInContent 1s ease-in-out forwards 0.5s;
 }
 .welcome-container {
   position: relative;
   height: 100vh;
   overflow: hidden;
+  background: url("./img/welcome.png");
+  background-size: cover;
+  background-position: center;
 }
 
 /* Styles for fading in the background image */
@@ -331,22 +335,6 @@ a:focus-visible {
   flex-grow: 1;
   padding: 0.75em 0.5em 0.5em;
 }
-
-/* .dash-footer {
-  font-size: 1rem;
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
-  background-color: var(--BGCOLOR);
-  padding: 0.5em;
-  border-top: 2px solid var(--BORDER-COLOR);
-  border-radius: 20px 20px 0 0;
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  gap: 1em;
-} */
 
 .dash-footer {
   font-size: 1rem;
@@ -621,10 +609,9 @@ tr {
   }
 }
 
-/* Container for the whole page */
 .public-container {
   position: relative;
-  height: 100vh;
+  height: 120vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -634,14 +621,13 @@ tr {
   background-position: center;
 }
 
-/* This is the 'poster' styling for the content in the middle */
 .poster {
   position: relative;
   background-color: rgb(185, 246, 187);
   padding: 20px;
   box-shadow: 0 10px 30px rgb(255, 255, 255);
   border-radius: 10px;
-  width: 70%;
+  width: 50%;
   height: 50%;
   max-width: 600px;
   opacity: 0;
@@ -652,9 +638,9 @@ tr {
   white-space: nowrap;
 }
 .poster-header {
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
-  text-overflow: clip;
+
   color: aquamarine;
   font-family: "Fredericka the Great";
 }
@@ -668,25 +654,46 @@ tr {
   margin-top: 20px;
 }
 
+.home-icon {
+  width: 100%;
+  transform: rotate(100deg);
+  margin-left: 13rem;
+}
+
+.dash-icon {
+  width: 100%;
+  margin-left: 15rem;
+  color: var(--LINK-HOVER);
+}
+
 footer a {
   color: #333;
   text-decoration: none;
   font-size: 1.5rem;
   transition: color 0.3s ease;
 }
-
-footer a:hover {
-  color: #555;
+.footer-label {
+  font-family: "Fredericka the Great";
+  font-size: 2rem;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Ensure text inside the poster is clearly visible */
+footer a:hover {
+  font-size: 2rem;
+  color: #01510d;
+  text-decoration: none;
+}
+
 .poster h1,
 .poster p,
 .poster a {
   color: #000;
 }
 
-/* Optional: Add a fade-in for the background */
 @keyframes fadeInBackground {
   from {
     opacity: 0;
