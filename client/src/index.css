@@ -56,7 +56,7 @@ body {
 
 /* || Dashboard Page */
 .welcome {
-  --footerHeight: 50px;
+  --footerHeight: 10px;
   height: calc(100% - var(--footerHeight));
   position: relative;
   z-index: 1;
@@ -69,9 +69,12 @@ body {
   /* background-image: url("./img/back.jpg"); */
   background-size: cover;
   background-repeat: no-repeat;
-
   background-size: cover;
+  flex-direction: column;
+  height: 100vh;
+  background-color: black;
 }
+
 .welcome-container {
   text-align: center;
   display: flex;
@@ -100,7 +103,7 @@ body {
 }
 .welcome p:nth-child(2) {
   animation-delay: 0.4s;
-  color: blue;
+  color: rgb(248, 245, 225);
 }
 .welcome p:nth-child(3) {
   animation-delay: 0.6s;
@@ -217,6 +220,71 @@ select {
   margin-top: 1em;
 }
 
+.public-container {
+  position: relative;
+  height: 120vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  /* background-image: url("./img/background.gif"); */
+  background-size: cover;
+  background-position: center;
+}
+
+.poster {
+  position: relative;
+  background-color: rgb(185, 246, 213);
+  padding: 20px;
+  box-shadow: 0 10px 30px rgb(255, 255, 255);
+  border-radius: 10px;
+  width: 50%;
+  height: 50%;
+  max-width: 600px;
+  opacity: 0;
+  animation: fadeInPoster 5s ease forwards;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+.poster-header {
+  font-size: 1.5rem;
+  text-align: center;
+
+  color: aquamarine;
+  font-family: "Fredericka the Great";
+}
+.public__main {
+  text-align: center;
+  font-family: "Fredericka the Great";
+  margin-top: 20px;
+  align-items: center;
+  height: 80%;
+}
+
+.public__addr {
+  margin-top: 20px;
+}
+.public-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  animation: fadeInBackground 3s ease forwards;
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.poster h1,
+.poster p,
+.poster a {
+  color: #000;
+}
 /* || DASH HEADER, CONTAINER & FOOTER */
 
 .dash-header {
@@ -322,6 +390,7 @@ tr {
   grid-template-columns: 1fr 2fr 1fr;
   color: var(--TABLE-COLOR);
   gap: 0.1em;
+  z-index: 0;
 }
 
 .table__button {
@@ -558,6 +627,7 @@ tr {
   .note__updated,
   .note__username {
     display: block;
+    z-index: 0;
   }
 
   .form__action-buttons {
@@ -620,61 +690,6 @@ tr {
   }
 }
 
-/* || PUBLIC PAGE */
-
-.public-container {
-  position: relative;
-  height: 120vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  /* background-image: url("./img/background.gif"); */
-  background-size: cover;
-  background-position: center;
-}
-
-.poster {
-  position: relative;
-  background-color: rgb(185, 246, 187);
-  padding: 20px;
-  box-shadow: 0 10px 30px rgb(255, 255, 255);
-  border-radius: 10px;
-  width: 50%;
-  height: 50%;
-  max-width: 600px;
-  opacity: 0;
-  animation: fadeInPoster 5s ease forwards;
-}
-
-.nowrap {
-  white-space: nowrap;
-}
-.poster-header {
-  font-size: 1.5rem;
-  text-align: center;
-
-  color: aquamarine;
-  font-family: "Fredericka the Great";
-}
-.public__main {
-  text-align: center;
-  font-family: "Fredericka the Great";
-  margin-top: 20px;
-  align-items: center;
-  height: 80%;
-}
-
-.public__addr {
-  margin-top: 20px;
-}
-
-.poster h1,
-.poster p,
-.poster a {
-  color: #000;
-}
-
 @keyframes fadeInBackground {
   from {
     opacity: 0;
@@ -684,19 +699,69 @@ tr {
   }
 }
 
-.public-container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  animation: fadeInBackground 3s ease forwards;
-  filter: blur(8px);
-  z-index: -1;
+@keyframes rotate {
+  from {
+    perspective: 0vmin;
+    transform: rotateY(0deg);
+  }
 }
+@keyframes letter-breathe {
+  from,
+  to {
+    font-variation-settings: "wght" 100;
+  }
+  50% {
+    font-variation-settings: "wght" 900;
+  }
+}
+
+@keyframes scale {
+  to {
+    transform: rotate(-180deg) rotateX(-20deg) translateY(30%);
+  }
+}
+
+@keyframes fall {
+  to {
+    transform: translateX(-110vw); /* Fall off the left side of the screen */
+  }
+}
+
+@keyframes tail-fade {
+  0%,
+  50% {
+    width: var(--star-tail-length);
+    opacity: 1;
+  }
+
+  70%,
+  80% {
+    width: 0;
+    opacity: 0.4;
+  }
+
+  100% {
+    width: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.6;
+  }
+}
+@keyframes move {
+  100% {
+    transform: translate3d(0, 0, 1px) rotate(360deg);
+  }
+}
+@font-face {
+  font-family: "TheFont";
+  src: url("https://garet.typeforward.com/assets/fonts/shared/TFMixVF.woff2")
+    format("woff2");
+}
+/* || PUBLIC PAGE */
 
 .wrap {
   display: flex;
@@ -722,12 +787,7 @@ tr {
   transform-style: preserve-3d;
   animation: rotate 5s ease-in-out backwards 1s;
 }
-@keyframes rotate {
-  from {
-    perspective: 0vmin;
-    transform: rotateY(0deg);
-  }
-}
+
 .left {
   transform-origin: right;
   transform: rotateY(-10deg) scale(2);
@@ -746,26 +806,6 @@ tr {
   transform-style: preserve-3d;
   animation: scale 5s ease-in-out forwards 1s;
 }
-@keyframes scale {
-  to {
-    transform: rotate(-180deg) rotateX(-20deg) translateY(30%);
-  }
-}
-
-@font-face {
-  font-family: "TheFont";
-  src: url("https://garet.typeforward.com/assets/fonts/shared/TFMixVF.woff2")
-    format("woff2");
-}
-
-.welcome {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: black;
-}
 
 .breathe-animation span {
   font-family: "TheFont";
@@ -773,16 +813,6 @@ tr {
   color: rgb(255, 238, 219);
   text-align: center;
   animation: letter-breathe 3s ease-in-out infinite;
-}
-
-@keyframes letter-breathe {
-  from,
-  to {
-    font-variation-settings: "wght" 100;
-  }
-  50% {
-    font-variation-settings: "wght" 900;
-  }
 }
 
 /* Title Style */
@@ -802,13 +832,7 @@ tr {
   color: white;
 }
 
-@keyframes move {
-  100% {
-    transform: translate3d(0, 0, 1px) rotate(360deg);
-  }
-}
-
-/* BAckgorund Style */
+/* BACKGROUND STYLES */
 .background {
   position: fixed;
   width: 100vw;
@@ -1000,7 +1024,8 @@ tr {
   animation-duration: 8s;
   animation-delay: -23s;
 }
-/* Public Pgae background  */
+
+/* Public PAGE background  */
 
 body {
   display: flex;
@@ -1099,35 +1124,4 @@ body {
 
 .star::after {
   transform: rotate(-45deg);
-}
-
-@keyframes fall {
-  to {
-    transform: translateX(-110vw); /* Fall off the left side of the screen */
-  }
-}
-
-@keyframes tail-fade {
-  0%,
-  50% {
-    width: var(--star-tail-length);
-    opacity: 1;
-  }
-
-  70%,
-  80% {
-    width: 0;
-    opacity: 0.4;
-  }
-
-  100% {
-    width: 0;
-    opacity: 0;
-  }
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0.6;
-  }
 }

@@ -7,6 +7,11 @@ import { keyframes } from "@emotion/react";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import FilterVintageIcon from "@mui/icons-material/FilterVintage";
+import Groups2Icon from "@mui/icons-material/Groups2";
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 const bounce = keyframes`
   0%, 20%, 50%, 80%, 100% {
@@ -64,17 +69,20 @@ const DashHeader = () => {
           Designers Hub
         </h1>
         <IconGroup className="icon-group">
-          <StyledIconButton href="/dash/users">
-            <Notes fontSize="large" />
+          <StyledIconButton href="/dash">
+            <DashboardIcon fontSize="large" />
           </StyledIconButton>
           <StyledIconButton href="/dash/notes/new">
-            <Add fontSize="large" />
+            <NoteAddIcon fontSize="large" />
           </StyledIconButton>
           <StyledIconButton href="/dash/notes">
-            <Notes fontSize="large" />
+            <AutoStoriesIcon fontSize="large" />
+          </StyledIconButton>
+          <StyledIconButton href="/dash/users">
+            <Groups2Icon fontSize="large" />
           </StyledIconButton>
           <StyledIconButton href="/dash/users/new">
-            <Login fontSize="large" />
+            <PersonAddIcon fontSize="large" href="/dash/users" />
           </StyledIconButton>
         </IconGroup>
       </Toolbar>

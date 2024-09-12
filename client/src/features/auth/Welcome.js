@@ -34,14 +34,14 @@ const Welcome = () => {
     <div className={`welcome ${isBlurred ? "blurred" : ""}`}>
       <h1 className="breathe-animation">
         <span>Notes & Tasks</span>
-        <p>Designers Hub</p>
+        <p className="public-text">Designers Hub</p>
       </h1>
       {/* <div className="wrap">
         <span className="left">Designer's</span>
         <span className="centre">Notes and Tasks</span>
         <span className="right">Dashboard</span>
       </div> */}
-      <p>{today}</p>
+      <p className="public-text">{today}</p>
       <div className="welcome-container">
         <button
           onClick={onNewUserClicked}
