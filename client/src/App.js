@@ -17,29 +17,6 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <div class="background">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Public />} />
