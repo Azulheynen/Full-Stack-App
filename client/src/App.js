@@ -15,8 +15,31 @@ import theme from "./styles/theme";
 import { ThemeProvider } from "@mui/material/styles";
 function App() {
   return (
-    <div>
+    <>
       <ThemeProvider theme={theme}>
+        <div class="background">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Public />} />
@@ -43,7 +66,7 @@ function App() {
           </Route>
         </Routes>
       </ThemeProvider>
-    </div>
+    </>
   );
 }
 

@@ -8,8 +8,8 @@ const DashLayout = () => {
       <DashHeader />
       <div className="dash-container">
         <Outlet />
+        <DashFooter />
       </div>
-      <DashFooter />
     </>
   );
 };

@@ -8,7 +8,6 @@ import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import FilterVintageIcon from "@mui/icons-material/FilterVintage";
 
-// Define a bouncing animation
 const bounce = keyframes`
   0%, 20%, 50%, 80%, 100% {
     transform: translateY(0);
@@ -58,13 +57,13 @@ const DashHeader = () => {
 
   const theme = useTheme();
   const content = (
-    <HeaderContainer position="sticky">
-      <Toolbar>
-        <Title variant="h1" href="/">
+    <HeaderContainer position="sticky" className="header-container">
+      <Toolbar className="header-container">
+        <h1 className="header-title" href="/">
           <FilterVintageIcon onClick={onGoHomeClicked} />
           Designers Hub
-        </Title>
-        <IconGroup>
+        </h1>
+        <IconGroup className="icon-group">
           <StyledIconButton href="/dash/users">
             <Notes fontSize="large" />
           </StyledIconButton>
