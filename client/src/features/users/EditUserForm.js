@@ -91,101 +91,107 @@ const EditUserForm = ({ user }) => {
     : [validUsername, role].every(Boolean);
 
   return (
-    <Paper
-      sx={{
-        padding: 3,
-        width: "70%",
-        margin: "auto",
-        backgroundColor: "#fefae0",
-      }}
-    >
-      <Typography variant="h5" gutterBottom>
-        Edit User
-      </Typography>
-      {isError ||
-        (isDelError && (
-          <Typography color="error">
-            {error?.data?.message || delerror?.data?.message}
-          </Typography>
-        ))}
-      <form onSubmit={(e) => e.preventDefault()} className="form-container">
-        <FormControl fullWidth margin="normal" error={!validUsername}>
-          <TextField
-            id="username"
-            name="username"
-            label="Username"
-            type="text"
-            value={username}
-            onChange={handleChange}
-            autoComplete="off"
-            placeholder="Username"
-          />
-          {!validUsername && (
-            <FormHelperText>Username must be 3-20 letters</FormHelperText>
-          )}
-        </FormControl>
+    <div className="form-container">
+      <Paper
+        sx={{
+          padding: 3,
+          width: "70%",
+          margin: "auto",
+          backgroundColor: "#fefae0",
+        }}
+      >
+        <Typography variant="h5" gutterBottom>
+          Edit User
+        </Typography>
+        {isError ||
+          (isDelError && (
+            <Typography color="error">
+              {error?.data?.message || delerror?.data?.message}
+            </Typography>
+          ))}
+        <form onSubmit={(e) => e.preventDefault()} className="form-container">
+          <FormControl fullWidth margin="normal" error={!validUsername}>
+            <TextField
+              id="username"
+              name="username"
+              label="Username"
+              type="text"
+              value={username}
+              onChange={handleChange}
+              autoComplete="off"
+              placeholder="Username"
+            />
+            {!validUsername && (
+              <FormHelperText>Username must be 3-20 letters</FormHelperText>
+            )}
+          </FormControl>
 
-        <FormControl
-          fullWidth
-          margin="normal"
-          error={password && !validPassword}
-        >
-          <TextField
-            id="password"
-            name="password"
-            label="Password"
-            type="password"
-            value={password}
-            onChange={handleChange}
-            placeholder="Password"
-            helperText={
-              password && !validPassword
-                ? "Password must be 4-12 characters, including !@#$%"
-                : "Leave empty to keep the current password"
+          <FormControl
+            fullWidth
+            margin="normal"
+            error={password && !validPassword}
+          >
+            <TextField
+              id="password"
+              name="password"
+              label="Password"
+              type="password"
+              value={password}
+              onChange={handleChange}
+              placeholder="Password"
+              helperText={
+                password && !validPassword
+                  ? "Password must be 4-12 characters, including !@#$%"
+                  : "Leave empty to keep the current password"
+              }
+            />
+            {password && !validPassword && (
+              <FormHelperText>
+                Password must be 4-12 characters, including !@#$%
+              </FormHelperText>
+            )}
+          </FormControl>
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={active}
+                onChange={handleChange}
+                name="active"
+              />
             }
+            label="Active"
           />
-          {password && !validPassword && (
-            <FormHelperText>
-              Password must be 4-12 characters, including !@#$%
-            </FormHelperText>
-          )}
-        </FormControl>
 
-        <FormControlLabel
-          control={
-            <Checkbox checked={active} onChange={handleChange} name="active" />
-          }
-          label="Active"
-        />
+          <FormControl fullWidth margin="normal">
+            <FormLabel>Assigned Role</FormLabel>
+            <RadioGroup name="role" value={role} onChange={handleChange}>
+              {roleOptions}
+            </RadioGroup>
+          </FormControl>
 
-        <FormControl fullWidth margin="normal">
-          <FormLabel>Assigned Role</FormLabel>
-          <RadioGroup name="role" value={role} onChange={handleChange}>
-            {roleOptions}
-          </RadioGroup>
-        </FormControl>
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={onSaveUserClicked}
-          disabled={!canSave}
-          startIcon={<FontAwesomeIcon icon={faSave} />}
-          sx={{ marginTop: 2, marginRight: 1 }}
-        >
-          Save
-        </Button>
-        <Button
-          variant="contained"
-          color="error"
-          onClick={onDeleteUserClicked}
-          startIcon={<FontAwesomeIcon icon={faTrashCan} />}
-          sx={{ marginTop: 2 }}
-        >
-          Delete
-        </Button>
-      </form>
-    </Paper>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={onSaveUserClicked}
+            disabled={!canSave}
+            startIcon={<FontAwesomeIcon icon={faSave} />}
+            sx={{ marginTop: 2, marginRight: 1 }}
+          >
+            Save
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={onDeleteUserClicked}
+            startIcon={<FontAwesomeIcon icon={faTrashCan} />}
+            sx={{ marginTop: 2 }}
+          >
+            Delete
+          </Button>
+        </form>
+      </Paper>
+    </div>
   );
 };
 
