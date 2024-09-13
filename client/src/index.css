@@ -66,7 +66,7 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  animation: fadeInContent 3s ease-in-out forwards;
+  animation: fadeInContent 1s ease-in-out forwards;
   /* background-image: url("./img/back.jpg"); */
   background-size: cover;
   background-repeat: no-repeat;
