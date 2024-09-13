@@ -82,6 +82,7 @@ const NewUserForm = () => {
           margin: "auto",
           alignItems: "center",
           justifyContent: "center",
+          zIndex: 2,
           width: "70%",
           backgroundColor: "#f9f8ee",
         }}
