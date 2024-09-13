@@ -41,6 +41,7 @@ Para obtener una copia local y ponerla en funcionamiento, sigue estos pasos:
 ### Requisitos Previos
 
 - Node.js y npm (Node Package Manager) instalados en tu máquina.
+  
 
 ### Instalación
 
@@ -79,10 +80,20 @@ Para obtener una copia local y ponerla en funcionamiento, sigue estos pasos:
    Crea un archivo `.env` en el directorio `server` con las siguientes variables de entorno:
 
    ```plaintext
-   MONGO_URI=tu_cadena_de_conexión_mongodb
-   JWT_SECRET=tu_secreto_jwt
+    NODE_ENV = development
+    DATABASE_URI=tu_cadena_de_conexión_mongodb
+    ACCESS_TOKEN_SECRET=tu_secreto_jwt
+    REFRESH_TOKEN_SECRET=tu_secreto_jwt_refresh
    ```
 
+   Para crear tu access token y tu refresh token, abre la terminal y typea:
+   node
+   -se abrira la terminal de comandos de node, ahora copy paste:
+     > require('crypto').randomBytes(64).toString('hex')
+   esto va a darte un string muy largo, alfanumerico que debes copiar y pegar como enviroment variable (ACCESS_TOKEN_SECRET,REFRESH_TOKEN_SECRET).
+
+
+     
 ## Uso
 
 - **Frontend:** La aplicación se ejecuta en `http://localhost:3000`.
