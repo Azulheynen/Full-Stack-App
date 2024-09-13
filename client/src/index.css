@@ -29,7 +29,7 @@ body {
   /* COLORS */
   --BGCOLOR: #405f1e; /* Pakistan Green */
   --BORDER-COLOR: #fefae0; /* Cornsilk */
-  --COLOR: #fefae0; /* Cornsilk */
+  --COLOR: #f9f8ee; /* Cornsilk */
   --ERROR: #bc6c25; /* Tigers Eye */
   --INACTIVE: #dda15e; /* Earth Yellow */
   --LINK-COLOR: #fefae0; /* Cornsilk */
@@ -461,88 +461,12 @@ tr {
 
 /* || FORM - GENERAL */
 
-.form {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 0.75em;
-  max-width: 800px;
-  z-index: 0;
+.form-container{
+height: fit-content;
+ z-index: 2;
+ margin-top: 90px;
+ height: 100%;
 }
-
-.form__checkbox-container {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  gap: 0.5em;
-}
-
-.form__persist {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  gap: 0.5em;
-}
-
-.form__title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.form__input,
-.form__submit-button {
-  padding: 0.5em;
-  border-radius: 15px;
-  border: 2px solid #606c38;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form__input:focus {
-  border-color: #bc6c25;
-  box-shadow: 0 0 5px rgba(188, 108, 37, 0.5);
-}
-
-.form__input--text {
-  min-height: 150px;
-}
-
-.form__input--incomplete {
-  border: 1px solid red;
-  outline: 1px solid red;
-}
-
-.form__checkbox {
-  width: 24px;
-  height: 24px;
-}
-
-.form__select {
-  width: fit-content;
-  padding: 0.25em;
-}
-
-.form__action-buttons {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 0.5em;
-  position: absolute;
-  right: 0.5em;
-}
-
-.form__row {
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 2em;
-}
-
-.form__divider {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 0.5em;
-}
-
 /* || MEDIA QUERIES */
 
 @media screen and (max-width: 400px) {

@@ -12,7 +12,7 @@ const EditNote = () => {
 
   const content =
     note && users ? (
-      <EditNoteForm note={note} users={users} />
+      <EditNoteForm className="form-container" note={note} users={users} />
     ) : (
       <p>Loading...</p>
     );

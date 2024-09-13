@@ -1,18 +1,29 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useUpdateNoteMutation, useDeleteNoteMutation } from "./notesApiSlice";
 import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  TextField,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  FormControlLabel,
+  Checkbox,
+  Typography,
+  Paper,
+  FormHelperText,
+} from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const EditNoteForm = ({ note, users }) => {
   const [updateNote, { isLoading, isSuccess, isError, error }] =
     useUpdateNoteMutation();
-
   const [
     deleteNote,
     { isSuccess: isDelSuccess, isError: isDelError, error: delerror },
   ] = useDeleteNoteMutation();
-
   const navigate = useNavigate();
 
   const [title, setTitle] = useState(note.title);
@@ -22,21 +33,18 @@ const EditNoteForm = ({ note, users }) => {
 
   useEffect(() => {
     if (isSuccess || isDelSuccess) {
-      setTitle("");
-      setText("");
-      setUserId("");
       navigate("/dash/notes");
     }
   }, [isSuccess, isDelSuccess, navigate]);
 
   const onTitleChanged = (e) => setTitle(e.target.value);
   const onTextChanged = (e) => setText(e.target.value);
-  const onCompletedChanged = (e) => setCompleted((prev) => !prev);
+  const onCompletedChanged = (e) => setCompleted(e.target.checked);
   const onUserIdChanged = (e) => setUserId(e.target.value);
 
   const canSave = [title, text, userId].every(Boolean) && !isLoading;
 
-  const onSaveNoteClicked = async (e) => {
+  const onSaveNoteClicked = async () => {
     if (canSave) {
       await updateNote({ id: note.id, user: userId, title, text, completed });
     }
@@ -54,6 +62,7 @@ const EditNoteForm = ({ note, users }) => {
     minute: "numeric",
     second: "numeric",
   });
+
   const updated = new Date(note.updatedAt).toLocaleString("en-US", {
     day: "numeric",
     month: "long",
@@ -63,120 +72,119 @@ const EditNoteForm = ({ note, users }) => {
     second: "numeric",
   });
 
-  const options = users.map((user) => {
-    return (
-      <option key={user.id} value={user.id}>
-        {" "}
-        {user.username}
-      </option>
-    );
-  });
+  const options = users.map((user) => (
+    <MenuItem key={user.id} value={user.id}>
+      {user.username}
+    </MenuItem>
+  ));
 
-  const errClass = isError || isDelError ? "errmsg" : "offscreen";
-  const validTitleClass = !title ? "form__input--incomplete" : "";
-  const validTextClass = !text ? "form__input--incomplete" : "";
+  const errContent = error?.data?.message || delerror?.data?.message;
 
-  const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
+  return (
+    <Paper
+      sx={{
+        padding: 3,
+        width: "70%",
+        margin: "auto",
+        backgroundColor: "#f9f8ee",
+      }}
+    >
+      <Typography variant="h5" gutterBottom>
+        Edit Note #{note.ticket}
+      </Typography>
+      {isError || isDelError ? (
+        <Typography color="error">{errContent}</Typography>
+      ) : null}
 
-  const content = (
-    <>
-      <p className={errClass}>{errContent}</p>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="title"
+            name="title"
+            label="Title"
+            type="text"
+            autoComplete="off"
+            value={title}
+            onChange={onTitleChanged}
+            required
+            error={!title}
+            helperText={!title ? "Title is required" : ""}
+          />
+        </FormControl>
 
-      <form className="form" onSubmit={(e) => e.preventDefault()}>
-        <div className="form__title-row">
-          <h2>Edit Note #{note.ticket}</h2>
-          <div className="form__action-buttons">
-            <button
-              className="icon-button"
-              title="Save"
-              onClick={onSaveNoteClicked}
-              disabled={!canSave}
-            >
-              <FontAwesomeIcon icon={faSave} />
-            </button>
-            <button
-              className="icon-button"
-              title="Delete"
-              onClick={onDeleteNoteClicked}
-            >
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>
-          </div>
-        </div>
-        <label className="form__label" htmlFor="note-title">
-          Title:
-        </label>
-        <input
-          className={`form__input ${validTitleClass}`}
-          id="note-title"
-          name="title"
-          type="text"
-          autoComplete="off"
-          value={title}
-          onChange={onTitleChanged}
-        />
+        <FormControl fullWidth margin="normal">
+          <TextField
+            id="text"
+            name="text"
+            label="Text"
+            type="text"
+            multiline
+            rows={4}
+            value={text}
+            onChange={onTextChanged}
+            required
+            error={!text}
+            helperText={!text ? "Text is required" : ""}
+          />
+        </FormControl>
 
-        <label className="form__label" htmlFor="note-text">
-          Text:
-        </label>
-        <textarea
-          className={`form__input form__input--text ${validTextClass}`}
-          id="note-text"
-          name="text"
-          value={text}
-          onChange={onTextChanged}
-        />
-        <div className="form__row">
-          <div className="form__divider">
-            <label
-              className="form__label form__checkbox-container"
-              htmlFor="note-completed"
-            >
-              WORK COMPLETE:
-              <input
-                className="form__checkbox"
-                id="note-completed"
+        <FormControl margin="normal">
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="completed"
                 name="completed"
-                type="checkbox"
                 checked={completed}
                 onChange={onCompletedChanged}
               />
-            </label>
+            }
+            label="Work Complete"
+          />
+        </FormControl>
 
-            <label
-              className="form__label form__checkbox-container"
-              htmlFor="note-username"
-            >
-              ASSIGNED TO:
-            </label>
-            <select
-              id="note-username"
-              name="username"
-              className="form__select"
-              value={userId}
-              onChange={onUserIdChanged}
-            >
-              {options}
-            </select>
-          </div>
-          <div className="form__divider">
-            <p className="form__created">
-              Created:
-              <br />
-              {created}
-            </p>
-            <p className="form__updated">
-              Updated:
-              <br />
-              {updated}
-            </p>
-          </div>
+        <FormControl fullWidth margin="normal">
+          <InputLabel htmlFor="userId">Assigned To</InputLabel>
+          <Select
+            id="userId"
+            name="userId"
+            value={userId}
+            onChange={onUserIdChanged}
+            required
+            error={!userId}
+          >
+            {options}
+          </Select>
+          {!userId && <FormHelperText>Select a user</FormHelperText>}
+        </FormControl>
+
+        <Typography variant="body2" sx={{ marginTop: 2 }}>
+          Created: {created}
+        </Typography>
+        <Typography variant="body2">Updated: {updated}</Typography>
+
+        <div style={{ marginTop: 2 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={onSaveNoteClicked}
+            disabled={!canSave}
+            startIcon={<FontAwesomeIcon icon={faSave} />}
+            sx={{ marginRight: 1 }}
+          >
+            Save
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={onDeleteNoteClicked}
+            startIcon={<FontAwesomeIcon icon={faTrashCan} />}
+          >
+            Delete
+          </Button>
         </div>
       </form>
-    </>
+    </Paper>
   );
-
-  return content;
 };
 
 export default EditNoteForm;

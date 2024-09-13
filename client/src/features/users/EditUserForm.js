@@ -1,6 +1,19 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useUpdateUserMutation, useDeleteUserMutation } from "./usersApiSlice";
 import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  TextField,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+  Paper,
+  Checkbox,
+  FormHelperText,
+} from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { ROLES } from "../../config/roles";
@@ -11,19 +24,17 @@ const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
 const EditUserForm = ({ user }) => {
   const [updateUser, { isLoading, isSuccess, isError, error }] =
     useUpdateUserMutation();
-
   const [
     deleteUser,
     { isSuccess: isDelSuccess, isError: isDelError, error: delerror },
   ] = useDeleteUserMutation();
-
   const navigate = useNavigate();
 
   const [username, setUsername] = useState(user.username);
   const [validUsername, setValidUsername] = useState(false);
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
-  const [roles, setRoles] = useState(user.roles);
+  const [role, setRole] = useState(user.roles[0] || "Employee"); // Assuming at least one role exists
   const [active, setActive] = useState(user.active);
 
   useEffect(() => {
@@ -35,33 +46,30 @@ const EditUserForm = ({ user }) => {
   }, [password]);
 
   useEffect(() => {
-    console.log(isSuccess);
     if (isSuccess || isDelSuccess) {
-      setUsername("");
-      setPassword("");
-      setRoles([]);
       navigate("/dash/users");
     }
   }, [isSuccess, isDelSuccess, navigate]);
 
-  const onUsernameChanged = (e) => setUsername(e.target.value);
-  const onPasswordChanged = (e) => setPassword(e.target.value);
-
-  const onRolesChanged = (e) => {
-    const values = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setRoles(values);
+  const handleChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    if (name === "username") setUsername(value);
+    if (name === "password") setPassword(value);
+    if (name === "role") setRole(value);
+    if (name === "active") setActive(checked);
   };
 
-  const onActiveChanged = () => setActive((prev) => !prev);
-
-  const onSaveUserClicked = async (e) => {
+  const onSaveUserClicked = async () => {
     if (password) {
-      await updateUser({ id: user.id, username, password, roles, active });
+      await updateUser({
+        id: user.id,
+        username,
+        password,
+        roles: [role],
+        active,
+      });
     } else {
-      await updateUser({ id: user.id, username, roles, active });
+      await updateUser({ id: user.id, username, roles: [role], active });
     }
   };
 
@@ -69,117 +77,116 @@ const EditUserForm = ({ user }) => {
     await deleteUser({ id: user.id });
   };
 
-  const options = Object.values(ROLES).map((role) => {
-    return (
-      <option key={role} value={role}>
-        {" "}
-        {role}
-      </option>
-    );
-  });
+  const roleOptions = Object.values(ROLES).map((role) => (
+    <FormControlLabel
+      key={role}
+      value={role}
+      control={<Radio />}
+      label={role}
+    />
+  ));
 
-  let canSave;
-  if (password) {
-    canSave =
-      [roles.length, validUsername, validPassword].every(Boolean) && !isLoading;
-  } else {
-    canSave = [roles.length, validUsername].every(Boolean) && !isLoading;
-  }
+  let canSave = password
+    ? [validUsername, validPassword, role].every(Boolean)
+    : [validUsername, role].every(Boolean);
 
-  const errClass = isError || isDelError ? "errmsg" : "offscreen";
-  const validUserClass = !validUsername ? "form__input--incomplete" : "";
-  const validPwdClass =
-    password && !validPassword ? "form__input--incomplete" : "";
-  const validRolesClass = !Boolean(roles.length)
-    ? "form__input--incomplete"
-    : "";
-
-  const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
-
-  const content = (
-    <>
-      <p className={errClass}>{errContent}</p>
-
-      <form className="form" onSubmit={(e) => e.preventDefault()}>
-        <div className="form__title-row">
-          <h2>Edit User</h2>
-          <div className="form__action-buttons">
-            <button
-              className="icon-button"
-              title="Save"
-              onClick={onSaveUserClicked}
-              disabled={!canSave}
-            >
-              <FontAwesomeIcon icon={faSave} />
-            </button>
-            <button
-              className="icon-button"
-              title="Delete"
-              onClick={onDeleteUserClicked}
-            >
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>
-          </div>
-        </div>
-        <label className="form__label" htmlFor="username">
-          Username: <span className="nowrap">[3-20 letters]</span>
-        </label>
-        <input
-          className={`form__input ${validUserClass}`}
-          id="username"
-          name="username"
-          type="text"
-          autoComplete="off"
-          value={username}
-          onChange={onUsernameChanged}
-        />
-
-        <label className="form__label" htmlFor="password">
-          Password: <span className="nowrap">[empty = no change]</span>{" "}
-          <span className="nowrap">[4-12 chars incl. !@#$%]</span>
-        </label>
-        <input
-          className={`form__input ${validPwdClass}`}
-          id="password"
-          name="password"
-          type="password"
-          value={password}
-          onChange={onPasswordChanged}
-        />
-
-        <label
-          className="form__label form__checkbox-container"
-          htmlFor="user-active"
-        >
-          ACTIVE:
-          <input
-            className="form__checkbox"
-            id="user-active"
-            name="user-active"
-            type="checkbox"
-            checked={active}
-            onChange={onActiveChanged}
+  return (
+    <Paper
+      sx={{
+        padding: 3,
+        width: "70%",
+        margin: "auto",
+        backgroundColor: "#fefae0",
+      }}
+    >
+      <Typography variant="h5" gutterBottom>
+        Edit User
+      </Typography>
+      {isError ||
+        (isDelError && (
+          <Typography color="error">
+            {error?.data?.message || delerror?.data?.message}
+          </Typography>
+        ))}
+      <form onSubmit={(e) => e.preventDefault()} className="form-container">
+        <FormControl fullWidth margin="normal" error={!validUsername}>
+          <TextField
+            id="username"
+            name="username"
+            label="Username"
+            type="text"
+            value={username}
+            onChange={handleChange}
+            autoComplete="off"
+            placeholder="Username"
           />
-        </label>
+          {!validUsername && (
+            <FormHelperText>Username must be 3-20 letters</FormHelperText>
+          )}
+        </FormControl>
 
-        <label className="form__label" htmlFor="roles">
-          ASSIGNED ROLES:
-        </label>
-        <select
-          id="roles"
-          name="roles"
-          className={`form__select ${validRolesClass}`}
-          multiple={true}
-          size="3"
-          value={roles}
-          onChange={onRolesChanged}
+        <FormControl
+          fullWidth
+          margin="normal"
+          error={password && !validPassword}
         >
-          {options}
-        </select>
-      </form>
-    </>
-  );
+          <TextField
+            id="password"
+            name="password"
+            label="Password"
+            type="password"
+            value={password}
+            onChange={handleChange}
+            placeholder="Password"
+            helperText={
+              password && !validPassword
+                ? "Password must be 4-12 characters, including !@#$%"
+                : "Leave empty to keep the current password"
+            }
+          />
+          {password && !validPassword && (
+            <FormHelperText>
+              Password must be 4-12 characters, including !@#$%
+            </FormHelperText>
+          )}
+        </FormControl>
 
-  return content;
+        <FormControlLabel
+          control={
+            <Checkbox checked={active} onChange={handleChange} name="active" />
+          }
+          label="Active"
+        />
+
+        <FormControl fullWidth margin="normal">
+          <FormLabel>Assigned Role</FormLabel>
+          <RadioGroup name="role" value={role} onChange={handleChange}>
+            {roleOptions}
+          </RadioGroup>
+        </FormControl>
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={onSaveUserClicked}
+          disabled={!canSave}
+          startIcon={<FontAwesomeIcon icon={faSave} />}
+          sx={{ marginTop: 2, marginRight: 1 }}
+        >
+          Save
+        </Button>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={onDeleteUserClicked}
+          startIcon={<FontAwesomeIcon icon={faTrashCan} />}
+          sx={{ marginTop: 2 }}
+        >
+          Delete
+        </Button>
+      </form>
+    </Paper>
+  );
 };
+
 export default EditUserForm;

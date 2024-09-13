@@ -1,18 +1,28 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAddNewNoteMutation } from "./notesApiSlice";
+import {
+  Button,
+  TextField,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Typography,
+  Paper,
+  FormHelperText,
+} from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 const NewNoteForm = ({ users }) => {
   const [addNewNote, { isLoading, isSuccess, isError, error }] =
     useAddNewNoteMutation();
-
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [userId, setUserId] = useState(users.id);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     if (isSuccess) {
@@ -20,7 +30,6 @@ const NewNoteForm = ({ users }) => {
       setText("");
       setUserId("");
       navigate("/dash/notes");
-      console.log(users[0].id);
     }
   }, [isSuccess, navigate]);
 
@@ -37,76 +46,91 @@ const NewNoteForm = ({ users }) => {
     }
   };
 
-  const options = users.map((user) => {
-    return (
-      <option key={user.id} value={user.id}>
-        {" "}
-        {user.username}
-      </option>
-    );
-  });
-
   const errClass = isError ? "errmsg" : "offscreen";
-  const validTitleClass = !title ? "form__input--incomplete" : "";
-  const validTextClass = !text ? "form__input--incomplete" : "";
 
-  const content = (
-    <>
-      <p className={errClass}>{error?.data?.message}</p>
+  return (
+    <div className="form-container">
+      <Paper
+        sx={{
+          padding: 3,
+          width: "70%",
+          margin: "auto",
+          backgroundColor: "#f9f8ee",
+        }}
+      >
+        <Typography variant="h5" gutterBottom>
+          New Note
+        </Typography>
+        {isError && (
+          <Typography color="error" className={errClass}>
+            {error?.data?.message}
+          </Typography>
+        )}
+        <form onSubmit={onSaveNoteClicked}>
+          <FormControl fullWidth margin="normal">
+            <TextField
+              id="title"
+              name="title"
+              label="Title"
+              type="text"
+              autoComplete="off"
+              value={title}
+              onChange={onTitleChanged}
+              required
+              error={!title}
+              helperText={!title ? "Title is required" : ""}
+            />
+          </FormControl>
 
-      <form className="form" onSubmit={onSaveNoteClicked}>
-        <div className="form__title-row">
-          <h2>New Note</h2>
-          <div className="form__action-buttons">
-            <button className="icon-button" title="Save" disabled={!canSave}>
-              <FontAwesomeIcon icon={faSave} />
-            </button>
-          </div>
-        </div>
-        <label className="form__label" htmlFor="title">
-          Title:
-        </label>
-        <input
-          className={`form__input ${validTitleClass}`}
-          id="title"
-          name="title"
-          type="text"
-          autoComplete="off"
-          value={title}
-          onChange={onTitleChanged}
-        />
+          <FormControl fullWidth margin="normal">
+            <TextField
+              id="text"
+              name="text"
+              label="Text"
+              type="text"
+              multiline
+              rows={4}
+              value={text}
+              onChange={onTextChanged}
+              required
+              error={!text}
+              helperText={!text ? "Text is required" : ""}
+            />
+          </FormControl>
 
-        <label className="form__label" htmlFor="text">
-          Text:
-        </label>
-        <textarea
-          className={`form__input form__input--text ${validTextClass}`}
-          id="text"
-          name="text"
-          value={text}
-          onChange={onTextChanged}
-        />
+          <FormControl fullWidth margin="normal">
+            <InputLabel htmlFor="userId">Assigned To</InputLabel>
+            <Select
+              id="userId"
+              name="userId"
+              value={userId}
+              onChange={onUserIdChanged}
+              required
+              error={!userId}
+            >
+              {users.map((user) => (
+                <MenuItem key={user.id} value={user.id}>
+                  {user.username}
+                </MenuItem>
+              ))}
+            </Select>
+            {!userId && <FormHelperText>Select a user</FormHelperText>}
+          </FormControl>
 
-        <label
-          className="form__label form__checkbox-container"
-          htmlFor="username"
-        >
-          ASSIGNED TO:
-        </label>
-        <select
-          id="username"
-          name="username"
-          className="form__select"
-          value={userId}
-          onChange={onUserIdChanged}
-        >
-          {options}
-        </select>
-      </form>
-    </>
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={!canSave}
+            startIcon={<FontAwesomeIcon icon={faSave} />}
+            sx={{ marginTop: 2 }}
+          >
+            Save
+          </Button>
+        </form>
+      </Paper>
+    </div>
   );
-
-  return content;
 };
 
 export default NewNoteForm;
