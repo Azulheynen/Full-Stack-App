@@ -62,6 +62,7 @@ const UserTable = () => {
           height: "80vh",
           zIndex: 2,
           padding: "8em",
+          borderRadius: "10px",
         }}
       >
         <TableContainer
@@ -73,7 +74,13 @@ const UserTable = () => {
           }}
         >
           <Table stickyHeader aria-label="sticky table">
-            <TableHead>
+            <TableHead
+              style={{
+                borderRadius: " 0  0  10px 10px ",
+                position: "sticky",
+                textalign: "left",
+              }}
+            >
               <TableRow>
                 {columns.map((column) => (
                   <TableCell
@@ -103,15 +110,14 @@ const UserTable = () => {
                       <TableCell
                         key={column.id}
                         align={column.align || "left"}
-                        sx={{
+                        style={{
+                          backgroundColor: "#fff",
+                          placeContent: "center",
                           borderBottom: "1px solid #ddd",
                           padding: "16px",
                           fontFamily: "Oswald",
-                          fontSize: "1.5em",
+                          fontSize: "1.5rem",
                           color: "#014651",
-                        }}
-                        style={{
-                          backgroundColor: "#fff",
                         }}
                       >
                         {row[column.id]}
@@ -133,10 +139,12 @@ const UserTable = () => {
             "& .MuiSelect-select": {
               padding: "10px",
             },
+
             zIndex: 2,
             fontFamily: "Oswald",
             fontSize: "1.5em",
             color: "#405f1e",
+            borderRadius: " 0  0  10px 10px ",
           }}
           rowsPerPageOptions={[10, 25, 100]}
           component="div"

@@ -101,8 +101,9 @@ const NotesList = () => {
             display: "flex",
             flexDirection: "column",
             height: "80vh",
-            padding: "1em",
             zIndex: 2,
+            padding: "8em",
+            borderRadius: "10px",
           }}
         >
           <TableContainer
@@ -114,20 +115,26 @@ const NotesList = () => {
             }}
           >
             <Table stickyHeader aria-label="sticky table">
-              <TableHead>
+              <TableHead
+                style={{
+                  borderRadius: " 0  0  10px 10px ",
+                  position: "sticky",
+                  textalign: "left",
+                }}
+              >
                 <TableRow>
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
                       align="left"
                       style={{
-                        minWidth: column.minWidth,
                         backgroundColor: "#82b1b8",
+                        minWidth: column.minWidth,
+                        justifyContent: "center",
                         fontWeight: "bold",
                         fontFamily: "Oswald",
-                        fontSize: "1.2em",
+                        fontSize: "1.5em",
                         color: "#014651",
-                        zIndex: 2,
                       }}
                     >
                       {column.label}
@@ -144,15 +151,14 @@ const NotesList = () => {
                         <TableCell
                           key={column.id}
                           align="left"
-                          sx={{
-                            borderBottom: "1px solid #ddd",
-                            padding: "8px",
-                            fontFamily: "Oswald",
-                            fontSize: "1em",
-                            color: "#014651",
-                          }}
                           style={{
                             backgroundColor: "#fff",
+                            placeContent: "center",
+                            borderBottom: "1px solid #ddd",
+                            padding: "16px",
+                            fontFamily: "Oswald",
+                            fontSize: "1.5rem",
+                            color: "#014651",
                           }}
                         >
                           {row[column.id]}
@@ -168,16 +174,18 @@ const NotesList = () => {
             sx={{
               backgroundColor: "#82b1b8",
               "& .MuiTablePagination-caption": {
-                fontSize: "1rem",
-                color: "#014651",
+                fontSize: "1.2rem",
+                color: "blue",
               },
               "& .MuiSelect-select": {
                 padding: "10px",
               },
-              fontFamily: "Oswald",
-              fontSize: "1em",
-              color: "#405f1e",
+
               zIndex: 2,
+              fontFamily: "Oswald",
+              fontSize: "1.5em",
+              color: "#405f1e",
+              borderRadius: " 0  0  10px 10px ",
             }}
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
