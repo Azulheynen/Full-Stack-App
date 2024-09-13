@@ -1,7 +1,31 @@
-import { useGetNotesQuery } from "./notesApiSlice";
-import Note from "./Note";
+import React from "react";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  IconButton,
+} from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { useGetNotesQuery } from "./notesApiSlice"; // Adjust this import based on your file structure
+
+const columns = [
+  { id: "status", label: "Status", minWidth: 120 },
+  { id: "created", label: "Created", minWidth: 150 },
+  { id: "updated", label: "Updated", minWidth: 150 },
+  { id: "title", label: "Title", minWidth: 200 },
+  { id: "username", label: "Owner", minWidth: 150 },
+  { id: "edit", label: "Edit", minWidth: 100 },
+];
 
 const NotesList = () => {
+  const navigate = useNavigate();
   const {
     data: notes,
     isLoading,
@@ -14,6 +38,18 @@ const NotesList = () => {
     refetchOnMountOrArgChange: true,
   });
 
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   let content;
 
   if (isLoading) content = <p>Loading...</p>;
@@ -23,41 +59,140 @@ const NotesList = () => {
   }
 
   if (isSuccess) {
-    const { ids } = notes;
+    const { ids, entities } = notes;
 
-    const tableContent = ids?.length
-      ? ids.map((noteId) => <Note key={noteId} noteId={noteId} />)
-      : null;
+    const rows = ids.map((noteId) => {
+      const note = entities[noteId] || {};
+      const created = new Date(note.createdAt).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+      });
+      const updated = new Date(note.updatedAt).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+      });
+      return {
+        status: note.completed ? (
+          <span style={{ color: "green" }}>Completed</span>
+        ) : (
+          <span style={{ color: "red" }}>Open</span>
+        ),
+        created,
+        updated,
+        title: note.title || "N/A",
+        username: note.username || "N/A",
+        edit: (
+          <IconButton
+            color="primary"
+            onClick={() => navigate(`/dash/notes/${noteId}`)}
+          >
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </IconButton>
+        ),
+      };
+    });
 
     content = (
-      <table className="table table--notes">
-        <thead className="table__thead">
-          <tr>
-            <th scope="col" className="table__th note__status">
-              Username
-            </th>
-            <th scope="col" className="table__th note__created">
-              Created
-            </th>
-            <th scope="col" className="table__th note__updated">
-              Updated
-            </th>
-            <th scope="col" className="table__th note__title">
-              Title
-            </th>
-            <th scope="col" className="table__th note__username">
-              Owner
-            </th>
-            <th scope="col" className="table__th note__edit">
-              Edit
-            </th>
-          </tr>
-        </thead>
-        <tbody>{tableContent}</tbody>
-      </table>
+      <div className="table-container">
+        <Paper
+          sx={{
+            width: "100%",
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column",
+            height: "80vh",
+            padding: "1em",
+            zIndex: 2,
+          }}
+        >
+          <TableContainer
+            sx={{
+              maxHeight: "calc(80vh - 64px)",
+              display: "flex",
+              flexDirection: "column",
+              zIndex: 2,
+            }}
+          >
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align="left"
+                      style={{
+                        minWidth: column.minWidth,
+                        backgroundColor: "#82b1b8",
+                        fontWeight: "bold",
+                        fontFamily: "Oswald",
+                        fontSize: "1.2em",
+                        color: "#014651",
+                        zIndex: 2,
+                      }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          align="left"
+                          sx={{
+                            borderBottom: "1px solid #ddd",
+                            padding: "8px",
+                            fontFamily: "Oswald",
+                            fontSize: "1em",
+                            color: "#014651",
+                          }}
+                          style={{
+                            backgroundColor: "#fff",
+                          }}
+                        >
+                          {row[column.id]}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          <TablePagination
+            sx={{
+              backgroundColor: "#82b1b8",
+              "& .MuiTablePagination-caption": {
+                fontSize: "1rem",
+                color: "#014651",
+              },
+              "& .MuiSelect-select": {
+                padding: "10px",
+              },
+              fontFamily: "Oswald",
+              fontSize: "1em",
+              color: "#405f1e",
+              zIndex: 2,
+            }}
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </div>
     );
   }
 
   return content;
 };
+
 export default NotesList;

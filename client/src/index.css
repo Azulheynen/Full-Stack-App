@@ -27,18 +27,19 @@ body {
 
 :root {
   /* COLORS */
-  --BGCOLOR: #283618; /* Pakistan Green */
+  --BGCOLOR: #405f1e; /* Pakistan Green */
   --BORDER-COLOR: #fefae0; /* Cornsilk */
   --COLOR: #fefae0; /* Cornsilk */
   --ERROR: #bc6c25; /* Tigers Eye */
   --INACTIVE: #dda15e; /* Earth Yellow */
   --LINK-COLOR: #fefae0; /* Cornsilk */
-  --LINK-HOVER: #606c38; /* Dark Moss Green */
+  --LINK-HOVER: #014651;
+  --LINK: #4799argb(128, 178, 185)ark Moss Green */
   --NOTE-BGCOLOR: hsla(240, 64%, 27%, 0.65); /* Keep original for notes */
-  --STATUS-COMPLETE: #606c38; /* Dark Moss Green */
+  --STATUS-COMPLETE: #96b13d; /* Dark Moss Green */
   --STATUS-OPEN: #bc6c25; /* Tigers Eye */
   --TABLE-BGCOLOR: #fefae0; /* Cornsilk */
-  --TABLE-COLOR: #283618; /* Pakistan Green */
+  --TABLE-COLOR: #c18129; /* Pakistan Green */
 }
 
 /* || UTILITY CLASSES */
@@ -312,12 +313,18 @@ select {
   gap: 0.5em;
 }
 
+h3 {
+  display: contents;
+  color: #c6ab93;
+  font-family: Oswald;
+}
 .dash-container {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  justify-content: center;
 }
 
 .dash-footer {
@@ -375,22 +382,24 @@ select {
 
 /* || TABLES - GENERAL */
 
-thead,
+/* thead,
 tbody,
 tr {
   display: contents;
   animation: fadeInContent 6s ease-in-out forwards 0.5s;
-  z-index: 0;
-}
+  z-index: 0; */
 
 .table {
-  font-size: 1rem;
+  font-size: 2rem;
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
   color: var(--TABLE-COLOR);
   gap: 0.1em;
-  z-index: 0;
+  z-index: 2;
+  margin: 20px;
+}
+
+.table-pagination {
+  background: #fefae0;
 }
 
 .table__button {

@@ -56,7 +56,7 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-const DashHeader = () => {
+const DashHeader = ({ user }) => {
   const navigate = useNavigate();
   const onGoHomeClicked = () => navigate("/dash");
 
@@ -68,6 +68,10 @@ const DashHeader = () => {
           <FilterVintageIcon onClick={onGoHomeClicked} />
           Designers Hub
         </h1>
+        <h3>
+          <p>Current User:{user}</p>
+          <p>Status:{user}</p>
+        </h3>
         <IconGroup className="icon-group">
           <StyledIconButton href="/dash">
             <DashboardIcon fontSize="large" />
