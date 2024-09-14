@@ -5,13 +5,21 @@ import { AppBar, Toolbar, Typography, IconButton, styled } from "@mui/material";
 import { Add, Notes, Login } from "@mui/icons-material";
 import { keyframes } from "@emotion/react";
 import { useTheme } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import FilterVintageIcon from "@mui/icons-material/FilterVintage";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import { useSendLogoutMutation } from "../features/auth/authApiSlice";
+import LoginIcon from "@mui/icons-material/Login";
+
+const DASH_REGEX = /^\/dash(\/)?$/;
+const NOTES_REGEX = /^\/dash\/notes(\/)?$/;
+const USERS_REGEX = /^\/dash\/users(\/)?$/;
 
 const bounce = keyframes`
   0%, 20%, 50%, 80%, 100% {
@@ -58,9 +66,34 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 
 const DashHeader = ({ user }) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [sendLogout, { isLoading, isSuccess, isError, error }] =
+    useSendLogoutMutation();
   const onGoHomeClicked = () => navigate("/dash");
 
-  const theme = useTheme();
+  useEffect(() => {
+    if (isSuccess) navigate("/");
+  }, [isSuccess, navigate]);
+
+  if (isLoading) return <p>Logging Out...</p>;
+
+  if (isError) return <p>Error: {error.data?.message}</p>;
+
+  let dashClass = null;
+  if (
+    !DASH_REGEX.test(pathname) &&
+    !NOTES_REGEX.test(pathname) &&
+    !USERS_REGEX.test(pathname)
+  ) {
+    dashClass = "dash-header__container--small";
+  }
+
+  const logoutButton = (
+    <button className="icon-button" title="Logout" onClick={sendLogout}>
+      <faRightFromBracket />
+    </button>
+  );
+
   const content = (
     <HeaderContainer position="sticky" className="header-container">
       <Toolbar className="header-container">
@@ -87,6 +120,13 @@ const DashHeader = ({ user }) => {
           </StyledIconButton>
           <StyledIconButton href="/dash/users/new">
             <PersonAddIcon fontSize="large" href="/dash/users" />
+          </StyledIconButton>{" "}
+          <StyledIconButton
+            className="icon-button"
+            title="Logout"
+            onClick={sendLogout}
+          >
+            <LoginIcon href="/" />
           </StyledIconButton>
         </IconGroup>
       </Toolbar>

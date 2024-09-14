@@ -1,14 +1,13 @@
-import { credentials } from "../../../../server/config/corsOptions";
 import { apiSlice } from "../../app/api/apiSlice";
 import { logOut } from "./authSlice";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: credentials({
+      query: ({ username, password, config }) => ({
         url: "/auth",
         method: "POST",
-        body: { ...credentials },
+        body: { username, password, credentials: config }, // Use credentials here
       }),
     }),
     sendLogout: builder.mutation({
@@ -18,9 +17,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
-          //const { data } =
           await queryFulfilled;
-          //console.log(data)
           dispatch(logOut());
           dispatch(apiSlice.util.resetApiState());
         } catch (err) {
