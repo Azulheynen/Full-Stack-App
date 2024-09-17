@@ -58,7 +58,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const { config, loading: configLoading } = useConfig(); // Fetch config
+  const { config, loading: configLoading } = useConfig();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
@@ -75,7 +75,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (configLoading || !config) return; // Ensure config is loaded
+    if (configLoading) {
+      setErrMsg("Config is still loading, please wait.");
+      return;
+    }
+
+    if (!config) {
+      setErrMsg("Config not available. Please try again later.");
+      return;
+    }
+    // if (configLoading || !config) return;
 
     try {
       const { accessToken } = await login({
@@ -97,7 +106,7 @@ const Login = () => {
       } else {
         setErrMsg(err.data?.message);
       }
-      errRef.current.focus();
+      // errRef.current.focus();
     }
   };
 
@@ -141,7 +150,12 @@ const Login = () => {
           margin="normal"
           fullWidth
         />
-        <SubmitButton type="submit" variant="contained" color="primary">
+        <SubmitButton
+          type="submit"
+          variant="contained"
+          color="primary"
+          // onClick={handleSubmit}
+        >
           Sign In
         </SubmitButton>
       </FormBox>

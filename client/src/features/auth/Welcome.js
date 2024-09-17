@@ -6,10 +6,15 @@ import { FcKindle } from "react-icons/fc";
 import { FcFilingCabinet } from "react-icons/fc";
 import { FcServices } from "react-icons/fc";
 import { PiArrowFatLinesLeftDuotone } from "react-icons/pi";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSendLogoutMutation } from "../../features/auth/authApiSlice";
 
 const Welcome = () => {
   const [isBlurred, setIsBlurred] = useState(false);
   const navigate = useNavigate();
+  const [sendLogout, { isLoading, isSuccess, isError, error }] =
+    useSendLogoutMutation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -71,6 +76,13 @@ const Welcome = () => {
           style={{ background: "none", border: "none", cursor: "pointer" }}
         >
           <FcFilingCabinet className="menu-icons" />
+        </button>
+        <button
+          className="icon-button"
+          title="Logout"
+          onClick={() => sendLogout()}
+        >
+          <FontAwesomeIcon icon={faRightFromBracket} size="2xs" color="white" />
         </button>
       </div>
     </div>

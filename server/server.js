@@ -29,7 +29,7 @@ app.use("/users", require("./routes/userRoutes"));
 app.use("/auth", require("./routes/authRoutes"));
 app.use("/notes", require("./routes/noteRoutes"));
 
-app.use("/config", require("./routes/config"));
+app.use("/config", configRoutes);
 
 app.all("*", (req, res) => {
   res.status(404);

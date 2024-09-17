@@ -1,21 +1,18 @@
-import { Link } from "react-router-dom";
-// src/components/Header.js
 import React from "react";
 import { AppBar, Toolbar, Typography, IconButton, styled } from "@mui/material";
-import { Add, Notes, Login } from "@mui/icons-material";
 import { keyframes } from "@emotion/react";
-import { useTheme } from "@mui/material/styles";
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import FilterVintageIcon from "@mui/icons-material/FilterVintage";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useSendLogoutMutation } from "../features/auth/authApiSlice";
-import LoginIcon from "@mui/icons-material/Login";
+import HubIcon from "@mui/icons-material/Hub";
 
 const DASH_REGEX = /^\/dash(\/)?$/;
 const NOTES_REGEX = /^\/dash\/notes(\/)?$/;
@@ -33,16 +30,14 @@ const bounce = keyframes`
   }
 `;
 
-// Header container styling
 const HeaderContainer = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.background.default, // Use theme background color
+  backgroundColor: theme.palette.background.default,
   color: theme.palette.text.primary,
   padding: "0 1em",
   borderBottom: `1px solid ${theme.palette.divider}`,
   boxShadow: theme.shadows[4],
 }));
 
-// Title styling with bounce animation
 const Title = styled(Typography)(({ theme }) => ({
   flexGrow: 1,
   color: theme.palette.text.primary,
@@ -58,9 +53,9 @@ const IconGroup = styled("div")({
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary,
-  transition: "color 0.3s ease", // Smooth transition for color
+  transition: "color 0.3s ease",
   "&:hover": {
-    color: theme.palette.secondary.main, // Color change on hover
+    color: theme.palette.secondary.main,
   },
 }));
 
@@ -69,7 +64,12 @@ const DashHeader = ({ user }) => {
   const { pathname } = useLocation();
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
+
   const onGoHomeClicked = () => navigate("/dash");
+
+  const handleNavigate = (route) => () => {
+    navigate(route);
+  };
 
   useEffect(() => {
     if (isSuccess) navigate("/");
@@ -85,12 +85,12 @@ const DashHeader = ({ user }) => {
     !NOTES_REGEX.test(pathname) &&
     !USERS_REGEX.test(pathname)
   ) {
-    dashClass = "dash-header__container--small";
+    dashClass = "header-container";
   }
 
   const logoutButton = (
-    <button className="icon-button" title="Logout" onClick={sendLogout}>
-      <faRightFromBracket />
+    <button className="icon-button" title="Logout" onClick={() => sendLogout()}>
+      <FontAwesomeIcon icon={faRightFromBracket} size="2xs" color="black" />
     </button>
   );
 
@@ -105,28 +105,28 @@ const DashHeader = ({ user }) => {
           <p>Current User:{user}</p>
           <p>Status:{user}</p>
         </h3>
+
         <IconGroup className="icon-group">
-          <StyledIconButton href="/dash">
+          <StyledIconButton onClick={handleNavigate("/dash")}>
             <DashboardIcon fontSize="large" />
           </StyledIconButton>
-          <StyledIconButton href="/dash/notes/new">
+          <StyledIconButton onClick={handleNavigate("/dash/notes/new")}>
             <NoteAddIcon fontSize="large" />
           </StyledIconButton>
-          <StyledIconButton href="/dash/notes">
+          <StyledIconButton onClick={handleNavigate("/dash/notes")}>
             <AutoStoriesIcon fontSize="large" />
           </StyledIconButton>
-          <StyledIconButton href="/dash/users">
+          <StyledIconButton onClick={handleNavigate("/dash/users")}>
             <Groups2Icon fontSize="large" />
           </StyledIconButton>
           <StyledIconButton href="/dash/users/new">
-            <PersonAddIcon fontSize="large" href="/dash/users" />
+            <PersonAddIcon
+              fontSize="large"
+              onClick={handleNavigate("/dash/users/new")}
+            />
           </StyledIconButton>{" "}
-          <StyledIconButton
-            className="icon-button"
-            title="Logout"
-            onClick={sendLogout}
-          >
-            <LoginIcon href="/" />
+          <StyledIconButton onClick={handleNavigate("/login")}>
+            <HubIcon fontSize="large" />
           </StyledIconButton>
         </IconGroup>
       </Toolbar>
