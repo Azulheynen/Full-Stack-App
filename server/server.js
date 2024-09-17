@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const configRoutes = require("./routes/config");
-
 const PORT = process.env.PORT || 3500;
 const connectDB = require("./config/dbConnection");
 const { logger, logEvents } = require("./middleware/logger");
@@ -30,7 +29,7 @@ app.use("/users", require("./routes/userRoutes"));
 app.use("/auth", require("./routes/authRoutes"));
 app.use("/notes", require("./routes/noteRoutes"));
 
-app.use("/api", configRoutes);
+app.use("/config", require("./routes/config"));
 
 app.all("*", (req, res) => {
   res.status(404);

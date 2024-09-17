@@ -40,7 +40,6 @@ const login = asyncHandler(async (req, res) => {
     { expiresIn: "7d" }
   );
 
-  // Create secure cookie with refresh token
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
     secure: true, //https

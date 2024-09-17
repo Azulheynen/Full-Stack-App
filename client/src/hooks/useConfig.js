@@ -1,4 +1,3 @@
-// src/hooks/useConfig.js
 import { useEffect, useState } from "react";
 
 const useConfig = () => {
@@ -8,9 +7,9 @@ const useConfig = () => {
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const response = await fetch("/api/config/credentials"); // Adjust the endpoint if necessary
-        const data = await response.json();
-        setConfig(data.credentials); // Adjust based on your API response
+        const response = await fetch("http://localhost:3500/config");
+        await response.json();
+        setConfig(response.credentials);
       } catch (error) {
         console.error("Failed to fetch config:", error);
       } finally {
