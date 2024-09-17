@@ -13,7 +13,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { useGetNotesQuery } from "./notesApiSlice"; // Adjust this import based on your file structure
+import { useGetNotesQuery } from "./notesApiSlice";
 
 const columns = [
   { id: "status", label: "Status", minWidth: 120 },
@@ -32,7 +32,7 @@ const NotesList = () => {
     isSuccess,
     isError,
     error,
-  } = useGetNotesQuery(undefined, {
+  } = useGetNotesQuery("notesList", {
     pollingInterval: 15000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
