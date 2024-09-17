@@ -12,8 +12,10 @@ import {
   Container,
   Box,
   Alert,
+  Checkbox,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import usePersist from "../../hooks/usePersist";
 
 // Styled components
 const StyledContainer = styled(Container)(({ theme }) => ({
@@ -55,12 +57,13 @@ const ErrorText = styled(Alert)(({ theme }) => ({
 const Login = () => {
   const userRef = useRef(null);
   const errRef = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [persist, setPersist] = usePersist();
   const { config, loading: configLoading } = useConfig();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
 
   useEffect(() => {
@@ -112,6 +115,7 @@ const Login = () => {
 
   const handleUserInput = (e) => setUsername(e.target.value);
   const handlePwdInput = (e) => setPassword(e.target.value);
+  const handleToggle = () => setPersist((prev) => !prev);
 
   if (isLoading || configLoading) return <Typography>Loading...</Typography>;
 
@@ -158,6 +162,16 @@ const Login = () => {
         >
           Sign In
         </SubmitButton>
+
+        <label htmlFor="persist" className="form_persist">
+          <Checkbox
+            type="checkbox"
+            id="persist"
+            onChange={handleToggle}
+            checked={persist}
+          ></Checkbox>
+          Trust this device
+        </label>
       </FormBox>
       <Box mt={2}>
         <Link to="/">Back to Home</Link>
