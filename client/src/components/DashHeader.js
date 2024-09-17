@@ -1,7 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, IconButton, styled } from "@mui/material";
 import { keyframes } from "@emotion/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import FilterVintageIcon from "@mui/icons-material/FilterVintage";
@@ -12,7 +12,8 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useSendLogoutMutation } from "../features/auth/authApiSlice";
-import HubIcon from "@mui/icons-material/Hub";
+import LoginIcon from "@mui/icons-material/Login";
+import { useSelector } from "react-redux";
 
 const DASH_REGEX = /^\/dash(\/)?$/;
 const NOTES_REGEX = /^\/dash\/notes(\/)?$/;
@@ -65,18 +66,18 @@ const DashHeader = ({ user }) => {
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
 
-  const onGoHomeClicked = () => navigate("/dash");
-
   const handleNavigate = (route) => () => {
     navigate(route);
   };
+
+  const username = useSelector((state) => state.auth.username);
+  const roles = useSelector((state) => state.auth.roles);
 
   useEffect(() => {
     if (isSuccess) navigate("/");
   }, [isSuccess, navigate]);
 
   if (isLoading) return <p>Logging Out...</p>;
-
   if (isError) return <p>Error: {error.data?.message}</p>;
 
   let dashClass = null;
@@ -98,12 +99,12 @@ const DashHeader = ({ user }) => {
     <HeaderContainer position="sticky" className="header-container">
       <Toolbar className="header-container">
         <h1 className="header-title" href="/">
-          <FilterVintageIcon onClick={onGoHomeClicked} />
+          <FilterVintageIcon onClick={handleNavigate("/dash")} />
           Designers Hub
         </h1>
         <h3>
-          <p>Current User:{user}</p>
-          <p>Status:{user}</p>
+          <p>Current User: "{username}"</p>
+          <p>Status:{roles}</p>
         </h3>
 
         <IconGroup className="icon-group">
@@ -124,9 +125,9 @@ const DashHeader = ({ user }) => {
               fontSize="large"
               onClick={handleNavigate("/dash/users/new")}
             />
-          </StyledIconButton>{" "}
-          <StyledIconButton onClick={handleNavigate("/login")}>
-            <HubIcon fontSize="large" />
+          </StyledIconButton>
+          <StyledIconButton>
+            <LoginIcon fontSize="large" onClick={handleNavigate("/login")} />
           </StyledIconButton>
         </IconGroup>
       </Toolbar>
