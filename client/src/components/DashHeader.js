@@ -3,17 +3,13 @@ import { AppBar, Toolbar, Typography, IconButton, styled } from "@mui/material";
 import { keyframes } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import FilterVintageIcon from "@mui/icons-material/FilterVintage";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import { IoHome } from "react-icons/io5";
 import { useSendLogoutMutation } from "../features/auth/authApiSlice";
 import LoginIcon from "@mui/icons-material/Login";
-import { useSelector } from "react-redux";
 import useAuth from "../hooks/useAuth";
 
 const DASH_REGEX = /^\/dash(\/)?$/;
@@ -141,21 +137,6 @@ const DashHeader = ({ user }) => {
     </StyledIconButton>;
   }
 
-  let homeButton = null;
-  if (
-    !pathname.includes(
-      "/dash/users" ||
-        "/dash/notes" ||
-        "/dash/users/new" ||
-        "/dash/notes/new" ||
-        "/login"
-    )
-  ) {
-    <StyledIconButton>
-      <DashboardIcon fontSize="large" onClick={handleNavigate("/dash")} />
-    </StyledIconButton>;
-  }
-
   const errClass = isError ? "errmsg" : "offscreen";
 
   let buttonContent;
@@ -168,6 +149,10 @@ const DashHeader = ({ user }) => {
         {newUserButton}
         {notesButton}
         {userButton}
+        <StyledIconButton>
+          <IoHome fontSize="2xxl" onClick={handleNavigate("/dash")} />
+        </StyledIconButton>
+
         <StyledIconButton>
           <LoginIcon fontSize="large" onClick={handleNavigate("/login")} />
         </StyledIconButton>

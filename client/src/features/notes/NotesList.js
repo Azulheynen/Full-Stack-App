@@ -14,7 +14,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useGetNotesQuery } from "./notesApiSlice";
-
+import useAuth from "../../hooks/useAuth";
+import Note from "./Note";
 const columns = [
   { id: "status", label: "Status", minWidth: 120 },
   { id: "created", label: "Created", minWidth: 150 },
@@ -26,6 +27,9 @@ const columns = [
 
 const NotesList = () => {
   const navigate = useNavigate();
+
+  const { username, isManager, isAdmin } = useAuth();
+
   const {
     data: notes,
     isLoading,
@@ -60,6 +64,18 @@ const NotesList = () => {
 
   if (isSuccess) {
     const { ids, entities } = notes;
+
+    let filteredIds;
+    if (isManager || isAdmin) {
+      filteredIds = [...ids];
+    } else {
+      filteredIds = ids.filter(
+        (noteId) => entities[noteId].username === username
+      );
+    }
+
+    const TableContent =
+      ids?.length && ids.map((noteId) => <Note key={noteId} noteId={noteId} />);
 
     const rows = ids.map((noteId) => {
       const note = entities[noteId] || {};
