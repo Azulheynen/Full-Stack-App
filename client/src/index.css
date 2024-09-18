@@ -21,6 +21,7 @@ body {
   flex-direction: column;
   height: 100%;
   width: 100%;
+  
 }
 
 /* || VARIABLES */
@@ -43,12 +44,25 @@ body {
 }
 
 /* || UTILITY CLASSES */
+h1 .errmsg {
+  display: inline-block;
+  background-color: var(--TABLE-BGCOLOR);
+  color: var(--ERROR);
+  padding: 2em;
+  size: 20px;
+  margin-bottom: 0.5em;
+  margin-top: 2em;
+  display:flex;
+}
+
 .errmsg {
   display: inline-block;
   background-color: var(--TABLE-BGCOLOR);
   color: var(--ERROR);
   padding: 0.25em;
   margin-bottom: 0.5em;
+  display:flex;
+  padding: 2em;
 }
 
 .nowrap {

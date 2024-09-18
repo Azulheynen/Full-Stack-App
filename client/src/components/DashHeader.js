@@ -14,6 +14,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useSendLogoutMutation } from "../features/auth/authApiSlice";
 import LoginIcon from "@mui/icons-material/Login";
 import { useSelector } from "react-redux";
+import useAuth from "../hooks/useAuth";
 
 const DASH_REGEX = /^\/dash(\/)?$/;
 const NOTES_REGEX = /^\/dash\/notes(\/)?$/;
@@ -70,8 +71,9 @@ const DashHeader = ({ user }) => {
     navigate(route);
   };
 
-  const username = useSelector((state) => state.auth.username);
-  const roles = useSelector((state) => state.auth.roles);
+  // const username = useSelector((state) => state.auth.username);
+  // const roles = useSelector((state) => state.auth.roles);
+  const { username, isManager, isAdmin, status } = useAuth();
 
   useEffect(() => {
     if (isSuccess) navigate("/");
@@ -104,23 +106,32 @@ const DashHeader = ({ user }) => {
         </h1>
         <h3>
           <p>Current User: "{username}"</p>
-          <p>Status:{roles}</p>
+          <p>Status:{status}</p>
         </h3>
 
         <IconGroup className="icon-group">
-          <StyledIconButton onClick={handleNavigate("/dash")}>
-            <DashboardIcon fontSize="large" />
+          <StyledIconButton>
+            <DashboardIcon fontSize="large" onClick={handleNavigate("/dash")} />
           </StyledIconButton>
-          <StyledIconButton onClick={handleNavigate("/dash/notes/new")}>
-            <NoteAddIcon fontSize="large" />
+          <StyledIconButton>
+            <NoteAddIcon
+              fontSize="large"
+              onClick={handleNavigate("/dash/notes/new")}
+            />
           </StyledIconButton>
-          <StyledIconButton onClick={handleNavigate("/dash/notes")}>
-            <AutoStoriesIcon fontSize="large" />
+          <StyledIconButton>
+            <AutoStoriesIcon
+              fontSize="large"
+              onClick={handleNavigate("/dash/notes")}
+            />
           </StyledIconButton>
-          <StyledIconButton onClick={handleNavigate("/dash/users")}>
-            <Groups2Icon fontSize="large" />
+          <StyledIconButton>
+            <Groups2Icon
+              fontSize="large"
+              onClick={handleNavigate("/dash/users")}
+            />
           </StyledIconButton>
-          <StyledIconButton href="/dash/users/new">
+          <StyledIconButton>
             <PersonAddIcon
               fontSize="large"
               onClick={handleNavigate("/dash/users/new")}

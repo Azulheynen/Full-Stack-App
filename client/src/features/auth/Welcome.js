@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import "../../index.css";
 import { FcConferenceCall } from "react-icons/fc";
 import { FcKindle } from "react-icons/fc";
 import { FcFilingCabinet } from "react-icons/fc";
 import { FcServices } from "react-icons/fc";
-import { PiArrowFatLinesLeftDuotone } from "react-icons/pi";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { FiLogOut } from "react-icons/fi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSendLogoutMutation } from "../../features/auth/authApiSlice";
 
@@ -15,6 +15,8 @@ const Welcome = () => {
   const navigate = useNavigate();
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
+
+  const { username, isManager, isAdmin } = useAuth();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -39,7 +41,7 @@ const Welcome = () => {
     <div className={`welcome ${isBlurred ? "blurred" : ""}`}>
       <h1 className="breathe-animation">
         <span>Notes & Tasks</span>
-        <p className="public-text">Designers Hub</p>
+        <p className="public-text">Welcome {username}!</p>
       </h1>
       {/* <div className="wrap">
         <span className="left">Designer's</span>
@@ -53,6 +55,7 @@ const Welcome = () => {
           style={{ background: "none", border: "none", cursor: "pointer" }}
         >
           <FcServices className="menu-icons" />
+          <h3>New User</h3>
         </button>
         <button
           onClick={onUsersClicked}
@@ -63,6 +66,7 @@ const Welcome = () => {
           }}
         >
           <FcConferenceCall className="menu-icons" />
+          <h3>Users</h3>
         </button>
 
         <button
@@ -70,19 +74,27 @@ const Welcome = () => {
           style={{ background: "none", border: "none", cursor: "pointer" }}
         >
           <FcKindle className="menu-icons" />
+          <h3>New Note</h3>
         </button>
         <button
           onClick={onNotesClicked}
           style={{ background: "none", border: "none", cursor: "pointer" }}
         >
           <FcFilingCabinet className="menu-icons" />
+          <h3>Notes</h3>
         </button>
+
         <button
-          className="icon-button"
-          title="Logout"
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            color: "white",
+          }}
           onClick={() => sendLogout()}
         >
-          <FontAwesomeIcon icon={faRightFromBracket} size="2xs" color="white" />
+          <FiLogOut className="menu-icons" />
+          <h3>Logout</h3>
         </button>
       </div>
     </div>
