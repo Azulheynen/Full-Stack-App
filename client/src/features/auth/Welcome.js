@@ -16,7 +16,7 @@ const Welcome = () => {
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
 
-  const { username, isManager, isAdmin } = useAuth();
+  const { username, isManager, isAdmin, status } = useAuth();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,13 +35,13 @@ const Welcome = () => {
   const onNewUserClicked = () => navigate("/dash/users/new");
   const onNewNoteClicked = () => navigate("/dash/notes/new");
   const onUsersClicked = () => navigate("/dash/users");
-  const onNotesClicked = () => navigate("/dash/notes/new");
+  const onNotesClicked = () => navigate("/dash/notes");
 
   return (
     <div className={`welcome ${isBlurred ? "blurred" : ""}`}>
       <h1 className="breathe-animation">
         <span>Notes & Tasks</span>
-        <p className="public-text">Welcome {username}!</p>
+        <h2 className="public-text">Welcome {username}!</h2>
       </h1>
       {/* <div className="wrap">
         <span className="left">Designer's</span>
@@ -50,24 +50,29 @@ const Welcome = () => {
       </div> */}
       <p className="public-text">{today}</p>
       <div className="welcome-container">
-        <button
-          onClick={onNewUserClicked}
-          style={{ background: "none", border: "none", cursor: "pointer" }}
-        >
-          <FcServices className="menu-icons" />
-          <h3>New User</h3>
-        </button>
-        <button
-          onClick={onUsersClicked}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          <FcConferenceCall className="menu-icons" />
-          <h3>Users</h3>
-        </button>
+        {(isManager || isAdmin) && (
+          <button
+            onClick={onNewUserClicked}
+            style={{ background: "none", border: "none", cursor: "pointer" }}
+          >
+            <FcServices className="menu-icons" />
+            <h3>New User</h3>
+          </button>
+        )}
+
+        {(isManager || isAdmin) && (
+          <button
+            onClick={onUsersClicked}
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            <FcConferenceCall className="menu-icons" />
+            <h3>User Settings </h3>
+          </button>
+        )}
 
         <button
           onClick={onNewNoteClicked}
@@ -81,20 +86,7 @@ const Welcome = () => {
           style={{ background: "none", border: "none", cursor: "pointer" }}
         >
           <FcFilingCabinet className="menu-icons" />
-          <h3>Notes</h3>
-        </button>
-
-        <button
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            color: "white",
-          }}
-          onClick={() => sendLogout()}
-        >
-          <FiLogOut className="menu-icons" />
-          <h3>Logout</h3>
+          <h3>View Notes</h3>
         </button>
       </div>
     </div>

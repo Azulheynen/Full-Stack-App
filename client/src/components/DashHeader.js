@@ -82,6 +82,8 @@ const DashHeader = ({ user }) => {
   if (isLoading) return <p>Logging Out...</p>;
   if (isError) return <p>Error: {error.data?.message}</p>;
 
+  /* Conditionally Buttons */
+
   let dashClass = null;
   if (
     !DASH_REGEX.test(pathname) &&
@@ -91,56 +93,99 @@ const DashHeader = ({ user }) => {
     dashClass = "header-container";
   }
 
-  const logoutButton = (
-    <button className="icon-button" title="Logout" onClick={() => sendLogout()}>
-      <FontAwesomeIcon icon={faRightFromBracket} size="2xs" color="black" />
-    </button>
-  );
+  let userButton = null;
+  if (isManager || isAdmin) {
+    if (!USERS_REGEX.test(pathname) && pathname.includes("/dash")) {
+      userButton = (
+        <StyledIconButton>
+          <Groups2Icon
+            fontSize="large"
+            onClick={handleNavigate("/dash/users")}
+          />
+        </StyledIconButton>
+      );
+    }
+  }
+
+  let newNoteButton = null;
+  if (NOTES_REGEX.test(pathname)) {
+    newNoteButton = (
+      <StyledIconButton>
+        <NoteAddIcon
+          fontSize="large"
+          onClick={handleNavigate("/dash/notes/new")}
+        />
+      </StyledIconButton>
+    );
+  }
+
+  let newUserButton = null;
+  if (USERS_REGEX.test(pathname)) {
+    newUserButton = (
+      <StyledIconButton>
+        <PersonAddIcon
+          fontSize="large"
+          onClick={handleNavigate("/dash/users/new")}
+        />
+      </StyledIconButton>
+    );
+  }
+
+  let notesButton = null;
+  if (!NOTES_REGEX.test(pathname) && pathname.includes("/dash")) {
+    <StyledIconButton>
+      <AutoStoriesIcon
+        fontSize="large"
+        onClick={handleNavigate("/dash/notes")}
+      />
+    </StyledIconButton>;
+  }
+
+  let homeButton = null;
+  if (
+    !pathname.includes(
+      "/dash/users" ||
+        "/dash/notes" ||
+        "/dash/users/new" ||
+        "/dash/notes/new" ||
+        "/login"
+    )
+  ) {
+    <StyledIconButton>
+      <DashboardIcon fontSize="large" onClick={handleNavigate("/dash")} />
+    </StyledIconButton>;
+  }
+
+  const errClass = isError ? "errmsg" : "offscreen";
+
+  let buttonContent;
+  if (isLoading) {
+    buttonContent = <p>Logging Out...</p>;
+  } else {
+    buttonContent = (
+      <>
+        {newNoteButton}
+        {newUserButton}
+        {notesButton}
+        {userButton}
+        <StyledIconButton>
+          <LoginIcon fontSize="large" onClick={handleNavigate("/login")} />
+        </StyledIconButton>
+      </>
+    );
+  }
 
   const content = (
     <HeaderContainer position="sticky" className="header-container">
       <Toolbar className="header-container">
         <h1 className="header-title" href="/">
-          <FilterVintageIcon onClick={handleNavigate("/dash")} />
           Designers Hub
         </h1>
         <h3>
           <p>Current User: "{username}"</p>
           <p>Status:{status}</p>
         </h3>
-
-        <IconGroup className="icon-group">
-          <StyledIconButton>
-            <DashboardIcon fontSize="large" onClick={handleNavigate("/dash")} />
-          </StyledIconButton>
-          <StyledIconButton>
-            <NoteAddIcon
-              fontSize="large"
-              onClick={handleNavigate("/dash/notes/new")}
-            />
-          </StyledIconButton>
-          <StyledIconButton>
-            <AutoStoriesIcon
-              fontSize="large"
-              onClick={handleNavigate("/dash/notes")}
-            />
-          </StyledIconButton>
-          <StyledIconButton>
-            <Groups2Icon
-              fontSize="large"
-              onClick={handleNavigate("/dash/users")}
-            />
-          </StyledIconButton>
-          <StyledIconButton>
-            <PersonAddIcon
-              fontSize="large"
-              onClick={handleNavigate("/dash/users/new")}
-            />
-          </StyledIconButton>
-          <StyledIconButton>
-            <LoginIcon fontSize="large" onClick={handleNavigate("/login")} />
-          </StyledIconButton>
-        </IconGroup>
+        <IconGroup className="icon-group">{buttonContent}</IconGroup>
       </Toolbar>
     </HeaderContainer>
   );
