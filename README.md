@@ -5,6 +5,9 @@ Hola! Soy Azul y este es mi projecto para demostrar mis habilidades como softwar
 ## Descripción
 
 Esta es una aplicación de notas de pila completa construida con el stack MERN (MongoDB, Express, React, Node.js). Cuenta con autenticación de usuarios, creación y gestión de notas con una interfaz moderna y receptiva. El frontend está construido con React y Material-UI, mientras que el backend utiliza Express y MongoDB para el almacenamiento de datos y la autenticación.
+Tambien puedes crear tu usuario, acceder a tu cuenta, y salir de ella.
+Puedes asumir un rol y acorde a ello las funciones de la app cambiaran.
+Si eliges el rol de empleado, por ejemplo, no podras ver las notas ni borrarlas. Tampoco editar los usuarios(Que si podras con el rol de "Admin")
 
 ## Características
 
@@ -41,7 +44,6 @@ Para obtener una copia local y ponerla en funcionamiento, sigue estos pasos:
 ### Requisitos Previos
 
 - Node.js y npm (Node Package Manager) instalados en tu máquina.
-  
 
 ### Instalación
 
@@ -89,11 +91,10 @@ Para obtener una copia local y ponerla en funcionamiento, sigue estos pasos:
    Para crear tu access token y tu refresh token, abre la terminal y typea:
    node
    -se abrira la terminal de comandos de node, ahora copy paste:
-     > require('crypto').randomBytes(64).toString('hex')
-   esto va a darte un string muy largo, alfanumerico que debes copiar y pegar como enviroment variable (ACCESS_TOKEN_SECRET,REFRESH_TOKEN_SECRET).
 
+   > require('crypto').randomBytes(64).toString('hex')
+   > esto va a darte un string muy largo, alfanumerico que debes copiar y pegar como enviroment variable (ACCESS_TOKEN_SECRET,REFRESH_TOKEN_SECRET).
 
-     
 ## Uso
 
 - **Frontend:** La aplicación se ejecuta en `http://localhost:3000`.
