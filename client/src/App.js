@@ -16,8 +16,9 @@ import { ThemeProvider } from "@mui/material/styles";
 import PersistLogin from "./features/auth/PersistLogin";
 import { ROLES } from "./config/roles";
 import RequireAuth from "./features/auth/RequireAuth";
-
+import useTitle from "./hooks/useTitle";
 function App() {
+  useTitle("Notes & Tasks App");
   return (
     <>
       <ThemeProvider theme={theme}>

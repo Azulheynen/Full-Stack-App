@@ -1,5 +1,5 @@
 import NewNoteForm from "./NewNoteForm";
-import { useGetUsersQuery } from "./usersApiSlice";
+import { useGetUsersQuery } from "../users/usersApiSlice";
 import PulseLoader from "react-spinners/PulseLoader";
 
 const NewNote = () => {
