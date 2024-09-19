@@ -175,6 +175,8 @@ h1 .errmsg {
   visibility: hidden;
 }
 
+
+
 /* Rainbow animated text */
 .rainbow-text {
   font-size: 3rem;
@@ -585,7 +587,49 @@ height: fit-content;
   a {
     color: black;
   }
+
+  .notes-buttons-container{
+    display: flex;
+    z-index: 2;
+    justify-content:space-evenly;
+    color: var(--LINK);
+    padding: 2em
+  }
+
+
+  .notes-save-button{
+    padding: 1em;
+    background-color: rgb(11, 151, 25);
+    color: #98ff98;
+    border-radius: 2em;
+    border-color: rgb(11, 123, 11);
+    box-shadow: -80vmin 0 5.474915704463615vmin currentColor;
+    font-size: 1.2em;
+  }
+
+
+  .notes-delete-button{
+    padding: 1em;
+    color: rgb(255, 105, 105);
+    background-color: rgb(176, 44, 44);
+    border-radius: 2em;
+    border-color: rgb(135, 0, 135);
+    box-shadow: -80vmin 0 5.474915704463615vmin currentColor;
+    font-size: 1.2em;
+  }
+
+    .notes-delete-button:hover{
+      transform: scale(1.1);
+  background-color: rgb(93, 2, 2);
+  }
+
+
+  .notes-save-button:hover{
+    transform: scale(1.1);
+  background-color: rgb(22, 72, 4);
+  }
 }
+
 
 /* || KEYFRAMES - ANIMATIONS */
 

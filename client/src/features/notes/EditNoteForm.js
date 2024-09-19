@@ -15,9 +15,12 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AiTwotoneDelete } from "react-icons/ai";
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import useAuth from "../../hooks/useAuth";
 
 const EditNoteForm = ({ note, users }) => {
+  const { isAdmin, isManager } = useAuth();
   const [updateNote, { isLoading, isSuccess, isError, error }] =
     useUpdateNoteMutation();
   const [
@@ -79,6 +82,23 @@ const EditNoteForm = ({ note, users }) => {
   ));
 
   const errContent = error?.data?.message || delerror?.data?.message;
+
+  let deleteButton = null;
+  if (isManager || isAdmin) {
+    deleteButton = (
+      <button
+        variant="contained"
+        color="black"
+        title="Delete"
+        className="notes-delete-button"
+        onClick={onDeleteNoteClicked}
+        startIcon={<FontAwesomeIcon icon={faTrashCan} />}
+        sx={{ marginRight: 1 }}
+      >
+        Delete
+      </button>
+    );
+  }
 
   return (
     <div className="form-container">
@@ -163,25 +183,22 @@ const EditNoteForm = ({ note, users }) => {
           </Typography>
           <Typography variant="body2">Updated: {updated}</Typography>
 
-          <div style={{ marginTop: 2 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={onSaveNoteClicked}
-              disabled={!canSave}
-              startIcon={<FontAwesomeIcon icon={faSave} />}
-              sx={{ marginRight: 1 }}
-            >
-              Save
-            </Button>
-            <Button
-              variant="contained"
-              color="error"
-              onClick={onDeleteNoteClicked}
-              startIcon={<FontAwesomeIcon icon={faTrashCan} />}
-            >
-              Delete
-            </Button>
+          <div className="notes-buttons-container">
+            <div style={{ marginTop: 2 }}>
+              <button
+                className="notes-save-button"
+                variant="contained"
+                color="primary"
+                onClick={onSaveNoteClicked}
+                disabled={!canSave}
+                startIcon={<FontAwesomeIcon icon={faSave} />}
+                sx={{ marginRight: 1 }}
+              >
+                Save
+              </button>
+            </div>
+
+            <div style={{ marginTop: 2 }}>{deleteButton}</div>
           </div>
         </form>
       </Paper>
