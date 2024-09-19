@@ -52,6 +52,7 @@ const NewNoteForm = ({ users }) => {
     <div className="form-container">
       <Paper
         sx={{
+          backgroundColor: "transparent",
           padding: 3,
           width: "70%",
           margin: "auto",

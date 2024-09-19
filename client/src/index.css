@@ -33,14 +33,15 @@ body {
   --COLOR: #f9f8ee; /* Cornsilk */
   --ERROR: #bc6c25; /* Tigers Eye */
   --INACTIVE: #dda15e; /* Earth Yellow */
-  --LINK-COLOR: #fefae0; /* Cornsilk */
-  --LINK-HOVER: #014651;
+  --LINK-HOVER: #138091;
   --LINK: #4799argb(128, 178, 185)ark Moss Green */
   --NOTE-BGCOLOR: hsla(240, 64%, 27%, 0.65); /* Keep original for notes */
   --STATUS-COMPLETE: #96b13d; /* Dark Moss Green */
   --STATUS-OPEN: #bc6c25; /* Tigers Eye */
   --TABLE-BGCOLOR: #fefae0; /* Cornsilk */
   --TABLE-COLOR: #c18129; /* Pakistan Green */
+  --TITLES-FONT-COLOR: #0c2c53;
+  
 }
 
 /* || UTILITY CLASSES */
@@ -80,14 +81,14 @@ h1 .errmsg {
   justify-content: center;
   align-items: center;
   position: relative;
-  animation: fadeInContent 1s ease-in-out forwards;
+  animation: fadeInContent 2s ease-in-out forwards;
   /* background-image: url("./img/back.jpg"); */
   background-size: cover;
   background-repeat: no-repeat;
   background-size: cover;
   flex-direction: column;
   height: 100vh;
-  background-color: black;
+  background-color: rgba(6, 64, 62, 0.531);
 }
 
 .welcome-container {
@@ -97,12 +98,12 @@ h1 .errmsg {
   gap: 15rem;
   align-items: center;
   position: relative;
-  animation: fadeInContent 1s ease-in-out forwards 0.5s;
+  animation: fadeInContent 2s ease-in-out forwards 0.5s;
   height: 30vh;
   overflow: hidden;
   background-size: cover;
   background-position: center;
-  animation: fadeInContent 6s ease-in-out forwards 0.5s;
+  animation: fadeInContent 1s ease-in-out forwards 0.5s;
 }
 .welcome p {
   font-size: 1.25rem;
@@ -308,7 +309,9 @@ select {
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: var(--BGCOLOR);
+  background-color:rgba(5, 143, 153, 0.716);
+
+
   padding: 0 0.5em;
   border-bottom: 2px solid var(--BORDER-COLOR);
   border-radius: 0 0 20px 20px;
@@ -375,7 +378,7 @@ h3 {
   color: var(--LINK-HOVER);
 }
 
-.footer-label {
+/* .footer-label {
   font-family: "Fredericka the Great";
   font-size: 2rem;
   text-align: center;
@@ -394,7 +397,7 @@ h3 {
   font-size: 2rem;
   color: #01510d;
   text-decoration: none;
-}
+} */
 
 /* || TABLES - GENERAL */
 
@@ -408,7 +411,7 @@ tr {
 .table-container {
   font-size: 1.5rem;
   width: 100%;
-  padding: 3em;
+  padding: 7em;
   border-radius: 20px;
   gap: 0.1em;
   margin: 20px;
@@ -433,7 +436,7 @@ tr {
 
 .table__th,
 .table__cell {
-  background-color: var(--TABLE-BGCOLOR);
+  background-color:rgb(130, 177, 184);
   text-align: left;
   border: 1px solid var(--TABLE-COLOR);
   padding: 0.5em;
@@ -444,6 +447,7 @@ tr {
 .table__cell:last-child {
   display: grid;
   place-content: center;
+  
 }
 
 .table__cell:hover {
@@ -505,7 +509,7 @@ height: fit-content;
   text-align: center;
   font-family: "Fredericka the Great";
   border-radius: 25%;
-  border-color: #283618;
+ 
   background: linear-gradient(
     to right,
     red,
@@ -526,7 +530,14 @@ height: fit-content;
   display: flex;
   flex-direction: row;
   align-content: space-around;
+  background-color: #c6daf2;
   justify-content: space-between;
+}
+
+
+.header-user-info{
+color: #1a3b64;
+
 }
 
 .icon-group {
@@ -831,7 +842,7 @@ height: fit-content;
   height: 100vh;
   top: 0;
   left: 0;
-  background: #3e1e68;
+  background: #6b6ec9;
   overflow: hidden;
 }
 

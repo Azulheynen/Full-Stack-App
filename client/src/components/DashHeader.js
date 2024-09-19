@@ -29,7 +29,7 @@ const bounce = keyframes`
 `;
 
 const HeaderContainer = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: "#c6daf2",
   color: theme.palette.text.primary,
   padding: "0 1em",
   borderBottom: `1px solid ${theme.palette.divider}`,
@@ -161,14 +161,14 @@ const DashHeader = ({ user }) => {
   }
 
   const content = (
-    <HeaderContainer position="sticky" className="header-container">
+    <HeaderContainer position="sticky" className="column.align">
       <Toolbar className="header-container">
         <h1 className="header-title" href="/">
           Designers Hub
         </h1>
         <h3>
-          <p>Current User: "{username}"</p>
-          <p>Status:{status}</p>
+          <p className="header-user-info">Current User: "{username}"</p>
+          <p className="header-user-info">Status:{status}</p>
         </h3>
         <IconGroup className="icon-group">{buttonContent}</IconGroup>
       </Toolbar>

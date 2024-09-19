@@ -94,10 +94,10 @@ const EditUserForm = ({ user }) => {
     <div className="form-container">
       <Paper
         sx={{
+          backgroundColor: "transparent",
           padding: 3,
           width: "70%",
           margin: "auto",
-          backgroundColor: "#fefae0",
         }}
       >
         <Typography variant="h5" gutterBottom>

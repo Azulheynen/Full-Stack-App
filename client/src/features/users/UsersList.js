@@ -26,18 +26,17 @@ const columns = [
 
 const UserTable = () => {
   const navigate = useNavigate();
-  // const users = useSelector(selectAllUsers);
-  const {
-    data: users,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetUsersQuery("usersList", {
-    pollingInterval: 60000,
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
-  });
+  const users = useSelector(selectAllUsers);
+  const { isLoading, isSuccess, isError, error } = useGetUsersQuery(
+    "usersList",
+    {
+      pollingInterval: 60000,
+      refetchOnFocus: true,
+      refetchOnMountOrArgChange: true,
+    }
+  );
+  const usersArray = Array.isArray(users) ? users : [];
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -60,11 +59,11 @@ const UserTable = () => {
 
   if (isSuccess) {
     const { ids } = users;
-
+    console.log(usersArray);
     const tableContent =
       ids?.length && ids.map((userId) => <User key={userId} userId={userId} />);
 
-    const rows = users.map((user) => ({
+    const rows = usersArray.map((user) => ({
       username: user.username,
       roles: user.roles.toString().replaceAll(",", ", "),
       actions: (
@@ -87,7 +86,7 @@ const UserTable = () => {
             flexDirection: "column",
             height: "80vh",
             zIndex: 2,
-            padding: "8em",
+            backgroundColor: "transparent",
             borderRadius: "10px",
           }}
         >
@@ -97,6 +96,7 @@ const UserTable = () => {
               display: "flex",
               flexDirection: "column",
               zIndex: 2,
+              backgroundColor: "#f9f8ee",
             }}
           >
             <Table stickyHeader aria-label="sticky table">
@@ -104,22 +104,22 @@ const UserTable = () => {
                 style={{
                   borderRadius: " 0  0  10px 10px ",
                   position: "sticky",
-                  textalign: "left",
+                  textalign: "center",
                 }}
               >
                 <TableRow>
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
-                      align={column.align || "left"}
+                      align={column.align || "center"}
                       style={{
                         backgroundColor: "#82b1b8",
                         minWidth: column.minWidth,
                         justifyContent: "center",
                         fontWeight: "bold",
                         fontFamily: "Oswald",
+                        fontColor: "0c2c53",
                         fontSize: "1.5em",
-                        color: "#014651",
                       }}
                     >
                       {column.label}
@@ -135,9 +135,9 @@ const UserTable = () => {
                       {columns.map((column) => (
                         <TableCell
                           key={column.id}
-                          align={column.align || "left"}
+                          align={column.align || "center"}
                           style={{
-                            backgroundColor: "#fff",
+                            backgroundColor: "#fefae0",
                             placeContent: "center",
                             borderBottom: "1px solid #ddd",
                             padding: "16px",
@@ -159,8 +159,8 @@ const UserTable = () => {
             sx={{
               backgroundColor: "#82b1b8",
               "& .MuiTablePagination-caption": {
-                fontSize: "1.2rem",
-                color: "blue",
+                fontSize: "2rem",
+                color: "c6daf2",
               },
               "& .MuiSelect-select": {
                 padding: "10px",
@@ -169,10 +169,10 @@ const UserTable = () => {
               zIndex: 2,
               fontFamily: "Oswald",
               fontSize: "1.5em",
-              color: "#405f1e",
+              color: "#0c2c53",
               borderRadius: " 0  0  10px 10px ",
             }}
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[2, 5, 10]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
@@ -183,8 +183,8 @@ const UserTable = () => {
         </Paper>
       </div>
     );
+    // }
   }
-
   return content;
 };
 

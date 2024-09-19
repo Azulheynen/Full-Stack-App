@@ -112,6 +112,7 @@ const NotesList = () => {
       <div className="table-container">
         <Paper
           sx={{
+            backgroundColor: "transparent",
             width: "100%",
             overflow: "hidden",
             display: "flex",
@@ -128,6 +129,7 @@ const NotesList = () => {
               display: "flex",
               flexDirection: "column",
               zIndex: 2,
+              backgroundColor: "#f9f8ee",
             }}
           >
             <Table stickyHeader aria-label="sticky table">
@@ -168,7 +170,6 @@ const NotesList = () => {
                           key={column.id}
                           align="left"
                           style={{
-                            backgroundColor: "#fff",
                             placeContent: "center",
                             borderBottom: "1px solid #ddd",
                             padding: "16px",
