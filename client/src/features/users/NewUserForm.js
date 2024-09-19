@@ -84,7 +84,7 @@ const NewUserForm = () => {
           justifyContent: "center",
           zIndex: 2,
           width: "70%",
-          backgroundColor: "transparent",
+          backgroundColor: "#f9f8ee",
         }}
       >
         <Typography

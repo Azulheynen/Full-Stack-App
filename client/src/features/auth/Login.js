@@ -24,7 +24,6 @@ const StyledContainer = styled(Container)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
   height: "100vh",
-  backgroundColor: theme.palette.background.paper,
 }));
 
 const FormBox = styled(Box)(({ theme }) => ({
@@ -33,9 +32,8 @@ const FormBox = styled(Box)(({ theme }) => ({
   width: "100%",
   maxWidth: "400px",
   padding: theme.spacing(3),
+  backgroundColor: "#f9f8ee",
   borderRadius: theme.shape.borderRadius,
-  boxShadow: theme.shadows[5],
-  backgroundColor: theme.palette.background.default,
   transition: "transform 0.3s ease-in-out",
   "&:hover": {
     transform: "scale(1.02)",
