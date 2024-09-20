@@ -4,6 +4,7 @@
   "description": "Hola! Soy Azul y este es mi projecto para demostrar mis habilidades como software dev!",
   "main": "index.js",
   "scripts": {
+    "build": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
