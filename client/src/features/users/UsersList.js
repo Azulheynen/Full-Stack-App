@@ -59,7 +59,6 @@ const UserTable = () => {
 
   if (isSuccess) {
     const { ids } = users;
-    console.log(usersArray);
     const tableContent =
       ids?.length && ids.map((userId) => <User key={userId} userId={userId} />);
 
